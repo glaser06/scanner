@@ -11,5 +11,5 @@ import UIKit
 import RealmSwift
 
 class Form {
-    
+    var identifier: String = ""
 }

@@ -14,28 +14,26 @@ import UIKit
 
 protocol ListFilesBusinessLogic
 {
-  func doSomething(request: ListFiles.Something.Request)
+    func fetchTags()
+
 }
 
 protocol ListFilesDataStore
 {
-  //var name: String { get set }
+    //var name: String { get set }
 }
 
 class ListFilesInteractor: ListFilesBusinessLogic, ListFilesDataStore
 {
-  var presenter: ListFilesPresentationLogic?
-  var worker: ListFilesWorker?
-  //var name: String = ""
-  
-  // MARK: Do something
-  
-  func doSomething(request: ListFiles.Something.Request)
-  {
-    worker = ListFilesWorker()
-    worker?.doSomeWork()
+    var presenter: ListFilesPresentationLogic?
+    var worker: ListFilesWorker?
+    var tagManager: TagManager = TagManager.sharedInstance
+    //var name: String = ""
     
-    let response = ListFiles.Something.Response()
-    presenter?.presentSomething(response: response)
-  }
+    // MARK: Do something
+    func fetchTags() {
+        let folders = self.tagManager.fetchFolders()
+        print(folders)
+    }
+    
 }

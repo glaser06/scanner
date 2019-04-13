@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="NewPageCollectionViewCell" customModule="Scanner" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="215" height="257"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="215" height="257"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DHZ-GI-G9t">
+                        <rect key="frame" x="0.0" y="0.0" width="215" height="257"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus-gray" translatesAutoresizingMaskIntoConstraints="NO" id="VgG-nc-hq8">
+                                <rect key="frame" x="70" y="71" width="75" height="75"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="VgG-nc-hq8" secondAttribute="height" multiplier="1:1" id="B9F-sm-HWI"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Page" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SbY-IP-Fa1">
+                                <rect key="frame" x="64.5" y="154" width="86" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="SbY-IP-Fa1" firstAttribute="centerX" secondItem="VgG-nc-hq8" secondAttribute="centerX" id="34t-Cu-tkf"/>
+                            <constraint firstItem="SbY-IP-Fa1" firstAttribute="top" secondItem="VgG-nc-hq8" secondAttribute="bottom" constant="8" id="s2e-Gp-JHu"/>
+                            <constraint firstItem="VgG-nc-hq8" firstAttribute="centerX" secondItem="DHZ-GI-G9t" secondAttribute="centerX" id="wRc-pv-Ete"/>
+                            <constraint firstItem="VgG-nc-hq8" firstAttribute="centerY" secondItem="DHZ-GI-G9t" secondAttribute="centerY" constant="-20" id="xqU-ED-5Wh"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="7"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="DHZ-GI-G9t" secondAttribute="bottom" id="Ly6-Zc-ZBO"/>
+                <constraint firstAttribute="trailing" secondItem="DHZ-GI-G9t" secondAttribute="trailing" id="Zgr-t0-4cQ"/>
+                <constraint firstItem="DHZ-GI-G9t" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="e4G-Sf-hiK"/>
+                <constraint firstItem="DHZ-GI-G9t" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="kE1-tv-yXe"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="215" height="257"/>
+            <point key="canvasLocation" x="261.60000000000002" y="246.9265367316342"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="plus-gray" width="75" height="75"/>
+    </resources>
+</document>

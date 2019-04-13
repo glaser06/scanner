@@ -20,6 +20,41 @@
 		E31C1BFD225BFE0C00A124BE /* ListFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31C1BF7225BFE0C00A124BE /* ListFilesViewController.swift */; };
 		E31C1BFE225BFE0C00A124BE /* ListFilesInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31C1BF8225BFE0C00A124BE /* ListFilesInteractor.swift */; };
 		E31C1C09225C444600A124BE /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31C1C08225C444600A124BE /* Form.swift */; };
+		E345F5D1225FADDF00585793 /* ShowFilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5CB225FADDF00585793 /* ShowFilePresenter.swift */; };
+		E345F5D2225FADDF00585793 /* ShowFileWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5CC225FADDF00585793 /* ShowFileWorker.swift */; };
+		E345F5D3225FADDF00585793 /* ShowFileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5CD225FADDF00585793 /* ShowFileRouter.swift */; };
+		E345F5D4225FADDF00585793 /* ShowFileModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5CE225FADDF00585793 /* ShowFileModels.swift */; };
+		E345F5D5225FADDF00585793 /* ShowFileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5CF225FADDF00585793 /* ShowFileViewController.swift */; };
+		E345F5D6225FADDF00585793 /* ShowFileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5D0225FADDF00585793 /* ShowFileInteractor.swift */; };
+		E345F5DA225FB91E00585793 /* PageImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5D8225FB91E00585793 /* PageImageCollectionViewCell.swift */; };
+		E345F5DB225FB91E00585793 /* PageImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E345F5D9225FB91E00585793 /* PageImageCollectionViewCell.xib */; };
+		E345F5DE225FE48700585793 /* NewPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5DC225FE48700585793 /* NewPageCollectionViewCell.swift */; };
+		E345F5DF225FE48700585793 /* NewPageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E345F5DD225FE48700585793 /* NewPageCollectionViewCell.xib */; };
+		E34EA887225E757B00CCDE7A /* TagCollectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34EA886225E757B00CCDE7A /* TagCollectionSource.swift */; };
+		E39FF304225D176900219FE7 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF302225D176800219FE7 /* UIViewExtension.swift */; };
+		E39FF305225D176900219FE7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF303225D176800219FE7 /* UITextFieldExtension.swift */; };
+		E39FF30B225D19A900219FE7 /* MainTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF309225D19A900219FE7 /* MainTagCollectionViewCell.swift */; };
+		E39FF30C225D19A900219FE7 /* MainTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39FF30A225D19A900219FE7 /* MainTagCollectionViewCell.xib */; };
+		E39FF30F225D19B400219FE7 /* FolderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF30D225D19B400219FE7 /* FolderCollectionViewCell.swift */; };
+		E39FF310225D19B400219FE7 /* FolderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39FF30E225D19B400219FE7 /* FolderCollectionViewCell.xib */; };
+		E39FF313225D19CA00219FE7 /* TagCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF311225D19CA00219FE7 /* TagCollectionTableViewCell.swift */; };
+		E39FF314225D19CA00219FE7 /* TagCollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39FF312225D19CA00219FE7 /* TagCollectionTableViewCell.xib */; };
+		E39FF317225D19DB00219FE7 /* FolderCollectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF315225D19DB00219FE7 /* FolderCollectionTableViewCell.swift */; };
+		E39FF318225D19DB00219FE7 /* FolderCollectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39FF316225D19DB00219FE7 /* FolderCollectionTableViewCell.xib */; };
+		E39FF31B225D19E500219FE7 /* FileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF319225D19E500219FE7 /* FileTableViewCell.swift */; };
+		E39FF31C225D19E500219FE7 /* FileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39FF31A225D19E500219FE7 /* FileTableViewCell.xib */; };
+		E39FF321225D1C0900219FE7 /* FilterConditionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF31F225D1C0900219FE7 /* FilterConditionsTableViewCell.swift */; };
+		E39FF322225D1C0900219FE7 /* FilterConditionsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39FF320225D1C0900219FE7 /* FilterConditionsTableViewCell.xib */; };
+		E39FF325225D258F00219FE7 /* FormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF323225D258F00219FE7 /* FormTableViewCell.swift */; };
+		E39FF326225D258F00219FE7 /* FormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E39FF324225D258F00219FE7 /* FormTableViewCell.xib */; };
+		E39FF328225D267400219FE7 /* TagManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF327225D267400219FE7 /* TagManager.swift */; };
+		E39FF32A225D40AB00219FE7 /* RealmPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF329225D40AB00219FE7 /* RealmPage.swift */; };
+		E39FF32C225D40B500219FE7 /* RealmFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF32B225D40B500219FE7 /* RealmFile.swift */; };
+		E39FF32E225D40BA00219FE7 /* RealmTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF32D225D40BA00219FE7 /* RealmTag.swift */; };
+		E39FF330225D40C100219FE7 /* RealmNameTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF32F225D40C100219FE7 /* RealmNameTemplate.swift */; };
+		E39FF332225D655F00219FE7 /* FilePageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF331225D655F00219FE7 /* FilePageManager.swift */; };
+		E39FF334225D86C500219FE7 /* TestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF333225D86C500219FE7 /* TestGenerator.swift */; };
+		E3B5DD22225DA0DE00ECDB4D /* CellDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */; };
 		E3DA41D9225C44FB0044D547 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41D8225C44FB0044D547 /* File.swift */; };
 		E3DA41DB225C45090044D547 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41DA225C45090044D547 /* Page.swift */; };
 		E3DA41DD225C45680044D547 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41DC225C45680044D547 /* Tag.swift */; };
@@ -44,6 +79,41 @@
 		E31C1BF7225BFE0C00A124BE /* ListFilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFilesViewController.swift; sourceTree = "<group>"; };
 		E31C1BF8225BFE0C00A124BE /* ListFilesInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFilesInteractor.swift; sourceTree = "<group>"; };
 		E31C1C08225C444600A124BE /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
+		E345F5CB225FADDF00585793 /* ShowFilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFilePresenter.swift; sourceTree = "<group>"; };
+		E345F5CC225FADDF00585793 /* ShowFileWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFileWorker.swift; sourceTree = "<group>"; };
+		E345F5CD225FADDF00585793 /* ShowFileRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFileRouter.swift; sourceTree = "<group>"; };
+		E345F5CE225FADDF00585793 /* ShowFileModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFileModels.swift; sourceTree = "<group>"; };
+		E345F5CF225FADDF00585793 /* ShowFileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFileViewController.swift; sourceTree = "<group>"; };
+		E345F5D0225FADDF00585793 /* ShowFileInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFileInteractor.swift; sourceTree = "<group>"; };
+		E345F5D8225FB91E00585793 /* PageImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		E345F5D9225FB91E00585793 /* PageImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PageImageCollectionViewCell.xib; sourceTree = "<group>"; };
+		E345F5DC225FE48700585793 /* NewPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageCollectionViewCell.swift; sourceTree = "<group>"; };
+		E345F5DD225FE48700585793 /* NewPageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewPageCollectionViewCell.xib; sourceTree = "<group>"; };
+		E34EA886225E757B00CCDE7A /* TagCollectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionSource.swift; sourceTree = "<group>"; };
+		E39FF302225D176800219FE7 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		E39FF303225D176800219FE7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
+		E39FF309225D19A900219FE7 /* MainTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTagCollectionViewCell.swift; sourceTree = "<group>"; };
+		E39FF30A225D19A900219FE7 /* MainTagCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTagCollectionViewCell.xib; sourceTree = "<group>"; };
+		E39FF30D225D19B400219FE7 /* FolderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCollectionViewCell.swift; sourceTree = "<group>"; };
+		E39FF30E225D19B400219FE7 /* FolderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderCollectionViewCell.xib; sourceTree = "<group>"; };
+		E39FF311225D19CA00219FE7 /* TagCollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionTableViewCell.swift; sourceTree = "<group>"; };
+		E39FF312225D19CA00219FE7 /* TagCollectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagCollectionTableViewCell.xib; sourceTree = "<group>"; };
+		E39FF315225D19DB00219FE7 /* FolderCollectionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderCollectionTableViewCell.swift; sourceTree = "<group>"; };
+		E39FF316225D19DB00219FE7 /* FolderCollectionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FolderCollectionTableViewCell.xib; sourceTree = "<group>"; };
+		E39FF319225D19E500219FE7 /* FileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileTableViewCell.swift; sourceTree = "<group>"; };
+		E39FF31A225D19E500219FE7 /* FileTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FileTableViewCell.xib; sourceTree = "<group>"; };
+		E39FF31F225D1C0900219FE7 /* FilterConditionsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterConditionsTableViewCell.swift; sourceTree = "<group>"; };
+		E39FF320225D1C0900219FE7 /* FilterConditionsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterConditionsTableViewCell.xib; sourceTree = "<group>"; };
+		E39FF323225D258F00219FE7 /* FormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTableViewCell.swift; sourceTree = "<group>"; };
+		E39FF324225D258F00219FE7 /* FormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FormTableViewCell.xib; sourceTree = "<group>"; };
+		E39FF327225D267400219FE7 /* TagManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagManager.swift; sourceTree = "<group>"; };
+		E39FF329225D40AB00219FE7 /* RealmPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmPage.swift; sourceTree = "<group>"; };
+		E39FF32B225D40B500219FE7 /* RealmFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmFile.swift; sourceTree = "<group>"; };
+		E39FF32D225D40BA00219FE7 /* RealmTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmTag.swift; sourceTree = "<group>"; };
+		E39FF32F225D40C100219FE7 /* RealmNameTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmNameTemplate.swift; sourceTree = "<group>"; };
+		E39FF331225D655F00219FE7 /* FilePageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePageManager.swift; sourceTree = "<group>"; };
+		E39FF333225D86C500219FE7 /* TestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGenerator.swift; sourceTree = "<group>"; };
+		E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDataProtocol.swift; sourceTree = "<group>"; };
 		E3DA41D8225C44FB0044D547 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		E3DA41DA225C45090044D547 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		E3DA41DC225C45680044D547 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -94,6 +164,7 @@
 			children = (
 				E31C1BDD225BFD8D00A124BE /* AppDelegate.swift */,
 				E31C1BDF225BFD8D00A124BE /* InitialViewController.swift */,
+				E39FF306225D176C00219FE7 /* Utilities */,
 				E31C1BE1225BFD8D00A124BE /* Main.storyboard */,
 				E31C1BE4225BFD8E00A124BE /* Assets.xcassets */,
 				E31C1BE6225BFD8E00A124BE /* LaunchScreen.storyboard */,
@@ -110,6 +181,9 @@
 			isa = PBXGroup;
 			children = (
 				E3DA41DE225C462F0044D547 /* StoreProtocol.swift */,
+				E39FF327225D267400219FE7 /* TagManager.swift */,
+				E39FF331225D655F00219FE7 /* FilePageManager.swift */,
+				E39FF333225D86C500219FE7 /* TestGenerator.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -150,12 +224,14 @@
 		E31C1BFF225BFE1000A124BE /* ListFiles */ = {
 			isa = PBXGroup;
 			children = (
+				E34EA886225E757B00CCDE7A /* TagCollectionSource.swift */,
+				E39FF307225D197700219FE7 /* TableViewCells */,
+				E31C1BF7225BFE0C00A124BE /* ListFilesViewController.swift */,
+				E31C1BF8225BFE0C00A124BE /* ListFilesInteractor.swift */,
 				E31C1BF3225BFE0C00A124BE /* ListFilesPresenter.swift */,
 				E31C1BF4225BFE0C00A124BE /* ListFilesWorker.swift */,
 				E31C1BF5225BFE0C00A124BE /* ListFilesRouter.swift */,
 				E31C1BF6225BFE0C00A124BE /* ListFilesModels.swift */,
-				E31C1BF7225BFE0C00A124BE /* ListFilesViewController.swift */,
-				E31C1BF8225BFE0C00A124BE /* ListFilesInteractor.swift */,
 			);
 			path = ListFiles;
 			sourceTree = "<group>";
@@ -163,6 +239,13 @@
 		E31C1C00225BFE5C00A124BE /* ShowFile */ = {
 			isa = PBXGroup;
 			children = (
+				E345F5D7225FB8F000585793 /* CollectionViewCells */,
+				E345F5CF225FADDF00585793 /* ShowFileViewController.swift */,
+				E345F5D0225FADDF00585793 /* ShowFileInteractor.swift */,
+				E345F5CB225FADDF00585793 /* ShowFilePresenter.swift */,
+				E345F5CC225FADDF00585793 /* ShowFileWorker.swift */,
+				E345F5CD225FADDF00585793 /* ShowFileRouter.swift */,
+				E345F5CE225FADDF00585793 /* ShowFileModels.swift */,
 			);
 			path = ShowFile;
 			sourceTree = "<group>";
@@ -198,6 +281,10 @@
 		E31C1C05225C0F9A00A124BE /* RealmModels */ = {
 			isa = PBXGroup;
 			children = (
+				E39FF329225D40AB00219FE7 /* RealmPage.swift */,
+				E39FF32B225D40B500219FE7 /* RealmFile.swift */,
+				E39FF32D225D40BA00219FE7 /* RealmTag.swift */,
+				E39FF32F225D40C100219FE7 /* RealmNameTemplate.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -215,6 +302,56 @@
 			children = (
 			);
 			path = ListTags;
+			sourceTree = "<group>";
+		};
+		E345F5D7225FB8F000585793 /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				E345F5D8225FB91E00585793 /* PageImageCollectionViewCell.swift */,
+				E345F5D9225FB91E00585793 /* PageImageCollectionViewCell.xib */,
+				E345F5DC225FE48700585793 /* NewPageCollectionViewCell.swift */,
+				E345F5DD225FE48700585793 /* NewPageCollectionViewCell.xib */,
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		E39FF306225D176C00219FE7 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E39FF302225D176800219FE7 /* UIViewExtension.swift */,
+				E39FF303225D176800219FE7 /* UITextFieldExtension.swift */,
+				E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		E39FF307225D197700219FE7 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				E39FF31F225D1C0900219FE7 /* FilterConditionsTableViewCell.swift */,
+				E39FF320225D1C0900219FE7 /* FilterConditionsTableViewCell.xib */,
+				E39FF311225D19CA00219FE7 /* TagCollectionTableViewCell.swift */,
+				E39FF312225D19CA00219FE7 /* TagCollectionTableViewCell.xib */,
+				E39FF315225D19DB00219FE7 /* FolderCollectionTableViewCell.swift */,
+				E39FF316225D19DB00219FE7 /* FolderCollectionTableViewCell.xib */,
+				E39FF319225D19E500219FE7 /* FileTableViewCell.swift */,
+				E39FF31A225D19E500219FE7 /* FileTableViewCell.xib */,
+				E39FF323225D258F00219FE7 /* FormTableViewCell.swift */,
+				E39FF324225D258F00219FE7 /* FormTableViewCell.xib */,
+				E39FF308225D197C00219FE7 /* CollectionViewCells */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		E39FF308225D197C00219FE7 /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				E39FF309225D19A900219FE7 /* MainTagCollectionViewCell.swift */,
+				E39FF30A225D19A900219FE7 /* MainTagCollectionViewCell.xib */,
+				E39FF30D225D19B400219FE7 /* FolderCollectionViewCell.swift */,
+				E39FF30E225D19B400219FE7 /* FolderCollectionViewCell.xib */,
+			);
+			path = CollectionViewCells;
 			sourceTree = "<group>";
 		};
 		F1A377356AD59C4E6700B929 /* Frameworks */ = {
@@ -285,8 +422,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E39FF318225D19DB00219FE7 /* FolderCollectionTableViewCell.xib in Resources */,
+				E345F5DB225FB91E00585793 /* PageImageCollectionViewCell.xib in Resources */,
+				E39FF31C225D19E500219FE7 /* FileTableViewCell.xib in Resources */,
 				E31C1BE8225BFD8E00A124BE /* LaunchScreen.storyboard in Resources */,
+				E39FF310225D19B400219FE7 /* FolderCollectionViewCell.xib in Resources */,
+				E39FF314225D19CA00219FE7 /* TagCollectionTableViewCell.xib in Resources */,
 				E31C1BE5225BFD8E00A124BE /* Assets.xcassets in Resources */,
+				E39FF322225D1C0900219FE7 /* FilterConditionsTableViewCell.xib in Resources */,
+				E345F5DF225FE48700585793 /* NewPageCollectionViewCell.xib in Resources */,
+				E39FF326225D258F00219FE7 /* FormTableViewCell.xib in Resources */,
+				E39FF30C225D19A900219FE7 /* MainTagCollectionViewCell.xib in Resources */,
 				E31C1BE3225BFD8D00A124BE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +450,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Scanner/Pods-Scanner-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
+				"${BUILT_PRODUCTS_DIR}/DeviceKit/DeviceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftLocation/SwiftLocation.framework",
@@ -315,6 +462,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DeviceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftLocation.framework",
@@ -355,19 +503,45 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E39FF32E225D40BA00219FE7 /* RealmTag.swift in Sources */,
+				E3B5DD22225DA0DE00ECDB4D /* CellDataProtocol.swift in Sources */,
+				E345F5D6225FADDF00585793 /* ShowFileInteractor.swift in Sources */,
+				E34EA887225E757B00CCDE7A /* TagCollectionSource.swift in Sources */,
+				E39FF32A225D40AB00219FE7 /* RealmPage.swift in Sources */,
 				E3DA41DD225C45680044D547 /* Tag.swift in Sources */,
 				E31C1BF9225BFE0C00A124BE /* ListFilesPresenter.swift in Sources */,
+				E39FF32C225D40B500219FE7 /* RealmFile.swift in Sources */,
+				E39FF30B225D19A900219FE7 /* MainTagCollectionViewCell.swift in Sources */,
+				E345F5DE225FE48700585793 /* NewPageCollectionViewCell.swift in Sources */,
 				E31C1BFC225BFE0C00A124BE /* ListFilesModels.swift in Sources */,
+				E345F5D3225FADDF00585793 /* ShowFileRouter.swift in Sources */,
+				E39FF313225D19CA00219FE7 /* TagCollectionTableViewCell.swift in Sources */,
 				E31C1BFD225BFE0C00A124BE /* ListFilesViewController.swift in Sources */,
+				E345F5D1225FADDF00585793 /* ShowFilePresenter.swift in Sources */,
+				E345F5D2225FADDF00585793 /* ShowFileWorker.swift in Sources */,
+				E39FF328225D267400219FE7 /* TagManager.swift in Sources */,
+				E39FF304225D176900219FE7 /* UIViewExtension.swift in Sources */,
 				E31C1BFA225BFE0C00A124BE /* ListFilesWorker.swift in Sources */,
 				E31C1BE0225BFD8D00A124BE /* InitialViewController.swift in Sources */,
 				E3DA41D9225C44FB0044D547 /* File.swift in Sources */,
+				E39FF321225D1C0900219FE7 /* FilterConditionsTableViewCell.swift in Sources */,
+				E345F5DA225FB91E00585793 /* PageImageCollectionViewCell.swift in Sources */,
+				E345F5D4225FADDF00585793 /* ShowFileModels.swift in Sources */,
 				E3DA41DB225C45090044D547 /* Page.swift in Sources */,
+				E39FF334225D86C500219FE7 /* TestGenerator.swift in Sources */,
 				E31C1C09225C444600A124BE /* Form.swift in Sources */,
+				E39FF305225D176900219FE7 /* UITextFieldExtension.swift in Sources */,
 				E31C1BDE225BFD8D00A124BE /* AppDelegate.swift in Sources */,
+				E39FF325225D258F00219FE7 /* FormTableViewCell.swift in Sources */,
+				E39FF332225D655F00219FE7 /* FilePageManager.swift in Sources */,
+				E39FF330225D40C100219FE7 /* RealmNameTemplate.swift in Sources */,
 				E31C1BFE225BFE0C00A124BE /* ListFilesInteractor.swift in Sources */,
 				E31C1BFB225BFE0C00A124BE /* ListFilesRouter.swift in Sources */,
 				E3DA41DF225C462F0044D547 /* StoreProtocol.swift in Sources */,
+				E39FF31B225D19E500219FE7 /* FileTableViewCell.swift in Sources */,
+				E39FF30F225D19B400219FE7 /* FolderCollectionViewCell.swift in Sources */,
+				E39FF317225D19DB00219FE7 /* FolderCollectionTableViewCell.swift in Sources */,
+				E345F5D5225FADDF00585793 /* ShowFileViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

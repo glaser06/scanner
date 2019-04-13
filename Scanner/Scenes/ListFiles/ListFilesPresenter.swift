@@ -14,18 +14,14 @@ import UIKit
 
 protocol ListFilesPresentationLogic
 {
-  func presentSomething(response: ListFiles.Something.Response)
+    
 }
 
 class ListFilesPresenter: ListFilesPresentationLogic
 {
-  weak var viewController: ListFilesDisplayLogic?
-  
-  // MARK: Do something
-  
-  func presentSomething(response: ListFiles.Something.Response)
-  {
-    let viewModel = ListFiles.Something.ViewModel()
-    viewController?.displaySomething(viewModel: viewModel)
-  }
+    weak var viewController: ListFilesDisplayLogic?
+    
+    // MARK: Do something
+    
+    
 }

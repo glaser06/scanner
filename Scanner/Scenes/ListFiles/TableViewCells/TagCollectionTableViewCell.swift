@@ -1,0 +1,42 @@
+//
+//  TagCollectionTableViewCell.swift
+//  Scanner
+//
+//  Created by Zaizen Kaegyoshi on 4/9/19.
+//  Copyright © 2019 zzzz. All rights reserved.
+//
+
+import UIKit
+
+class TagCollectionTableViewCell: UITableViewCell, DisplayableCell {
+    
+    static var identifier: String = "TagCollectionTableCell"
+    static var nibName: String = "TagCollectionTableViewCell"
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        if let collectionViewFlowLayout = self.tagCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            
+                        collectionViewFlowLayout.estimatedItemSize = CGSize(width: 44, height: 56)
+//            collectionViewFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            
+        }
+        self.tagCollectionView.register(UINib(nibName: MainTagCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: MainTagCollectionViewCell.identifier)
+    }
+    
+    @IBOutlet weak var tagCollectionView: UICollectionView!
+    
+    func setCell(collectionHandler: UICollectionViewDataSource & UICollectionViewDelegate) {
+        self.tagCollectionView.delegate = collectionHandler
+        self.tagCollectionView.dataSource = collectionHandler
+        self.tagCollectionView.reloadData()
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    
+}

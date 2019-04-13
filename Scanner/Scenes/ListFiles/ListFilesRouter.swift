@@ -14,47 +14,75 @@ import UIKit
 
 @objc protocol ListFilesRoutingLogic
 {
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToShowFile(segue: UIStoryboardSegue?)
 }
 
 protocol ListFilesDataPassing
 {
-  var dataStore: ListFilesDataStore? { get }
+    var dataStore: ListFilesDataStore? { get }
 }
 
 class ListFilesRouter: NSObject, ListFilesRoutingLogic, ListFilesDataPassing
 {
-  weak var viewController: ListFilesViewController?
-  var dataStore: ListFilesDataStore?
-  
-  // MARK: Routing
-  
-  //func routeToSomewhere(segue: UIStoryboardSegue?)
-  //{
-  //  if let segue = segue {
-  //    let destinationVC = segue.destination as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //  } else {
-  //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-  //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
-  //    var destinationDS = destinationVC.router!.dataStore!
-  //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
-  //    navigateToSomewhere(source: viewController!, destination: destinationVC)
-  //  }
-  //}
-
-  // MARK: Navigation
-  
-  //func navigateToSomewhere(source: ListFilesViewController, destination: SomewhereViewController)
-  //{
-  //  source.show(destination, sender: nil)
-  //}
-  
-  // MARK: Passing data
-  
-  //func passDataToSomewhere(source: ListFilesDataStore, destination: inout SomewhereDataStore)
-  //{
-  //  destination.name = source.name
-  //}
+    weak var viewController: ListFilesViewController?
+    var dataStore: ListFilesDataStore?
+    
+    // MARK: Routing
+    func routeToShowFile(segue: UIStoryboardSegue?) {
+        
+        if let segue = segue {
+            let destinationVC = segue.destination as! ShowFileViewController
+//            destinationVC.modalTransitionStyle = .crossDissolve
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToShowFile(source: dataStore!, destination: &destinationDS)
+        } else {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let destinationVC = storyboard.instantiateViewController(withIdentifier: "ShowFileViewController") as! ShowFileViewController
+            var destinationDS = destinationVC.router!.dataStore!
+            passDataToShowFile(source: dataStore!, destination: &destinationDS)
+            navigateToShowFile(source: viewController!, destination: destinationVC)
+        }
+    }
+    func navigateToShowFile(source: ListFilesViewController, destination: ShowFileViewController)
+    {
+//        source.present
+        source.show(destination, sender: nil)
+    }
+    
+//    MARK: Passing data
+    
+    func passDataToShowFile(source: ListFilesDataStore, destination: inout ShowFileDataStore)
+    {
+        destination.file = nil
+    }
+    
+    
+    //func routeToSomewhere(segue: UIStoryboardSegue?)
+    //{
+    //  if let segue = segue {
+    //    let destinationVC = segue.destination as! SomewhereViewController
+    //    var destinationDS = destinationVC.router!.dataStore!
+    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+    //  } else {
+    //    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    //    let destinationVC = storyboard.instantiateViewController(withIdentifier: "SomewhereViewController") as! SomewhereViewController
+    //    var destinationDS = destinationVC.router!.dataStore!
+    //    passDataToSomewhere(source: dataStore!, destination: &destinationDS)
+    //    navigateToSomewhere(source: viewController!, destination: destinationVC)
+    //  }
+    //}
+    
+    // MARK: Navigation
+    
+    //func navigateToSomewhere(source: ListFilesViewController, destination: SomewhereViewController)
+    //{
+    //  source.show(destination, sender: nil)
+    //}
+    
+    // MARK: Passing data
+    
+    //func passDataToSomewhere(source: ListFilesDataStore, destination: inout SomewhereDataStore)
+    //{
+    //  destination.name = source.name
+    //}
 }

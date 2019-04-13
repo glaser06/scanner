@@ -7,13 +7,27 @@
 //
 
 import UIKit
+import RealmSwift
 
 class InitialViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let realm = try! Realm()
+        try! realm.write {
+            realm.deleteAll()
+        }
+        
+        TestGenerator.addTags()
+        TestGenerator.addChildTags()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        let storyboard = self.storyboard
+        let nav = storyboard?.instantiateViewController(withIdentifier: "MainNavigationController") as! UINavigationController
+        self.present(nav, animated: false, completion: nil)
+    }
+    
 
 
 }

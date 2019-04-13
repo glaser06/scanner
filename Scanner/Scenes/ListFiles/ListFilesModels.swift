@@ -14,18 +14,36 @@ import UIKit
 
 enum ListFiles
 {
-  // MARK: Use cases
-  
-  enum Something
-  {
-    struct Request
-    {
+    // MARK: Use cases
+    struct TagModel {
+        var name: String
+        var color: UIColor
+        var count: String
     }
-    struct Response
-    {
+    enum FetchTags {
+        struct Request
+        {
+        }
+        struct Response
+        {
+            var tags: [Tag]
+            var folders: [Tag]
+        }
+        struct ViewModel
+        {
+        }
     }
-    struct ViewModel
+    
+    enum Something
     {
+        struct Request
+        {
+        }
+        struct Response
+        {
+        }
+        struct ViewModel
+        {
+        }
     }
-  }
 }
