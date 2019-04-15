@@ -14,7 +14,8 @@ import UIKit
 
 protocol ListFilesDisplayLogic: class
 {
-    
+    func displayTags(vm: ListFiles.FetchTags.ViewModel)
+    func displayFiles(vm: [File])
 }
 
 class ListFilesViewController: UIViewController, ListFilesDisplayLogic
@@ -69,15 +70,23 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        self.tagSources = TagCollectionSource()
+        self.folderSources = TagCollectionSource()
         let cellsToRegister: Array<DisplayableCell.Type> = [
             TagCollectionTableViewCell.self,
-            FolderCollectionTableViewCell.self
+            FolderCollectionTableViewCell.self,
+            FileTableViewCell.self
         ]
         
-        self.setupTableView(tableView: self.allTableView, cellsToRegister: cellsToRegister, estimatedHeight: 120)
+        self.setupTableView(tableView: self.allTableView, cellsToRegister: cellsToRegister, estimatedHeight: nil)
+        self.allTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 140, right: 0)
         
         self.fetchTags()
+        self.fetchFiles()
         
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchTags), name: .tagDataChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchFiles), name: .fileDataChanged, object: nil)
         
     }
 
@@ -91,19 +100,61 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
         }
     }
     
-    func fetchTags() {
+    @objc func fetchTags() {
         self.interactor?.fetchTags()
+    }
+    @objc func fetchFiles() {
+        self.interactor?.fetchFiles()
     }
     
     
     // MARK: Do something
+    var files: [File] = []
+    
+    var tagSources: TagCollectionSource?
+    var folderSources: TagCollectionSource?
+    
+    var folderHeight: CGFloat = 180
+    
     
     // MARK: Outlets
     
     @IBOutlet weak var allTableView: UITableView!
     
+    @IBAction func addFile () {
+        UIView.setAnimationsEnabled(false)
+        self.performSegue(withIdentifier: "ShowFile", sender: nil)
+        UIView.setAnimationsEnabled(true)
+    }
+    
     
     //@IBOutlet weak var nameTextField: UITextField!
+    
+    func displayTags(vm: ListFiles.FetchTags.ViewModel) {
+        
+        self.tagSources?.tags = vm.tags
+        self.folderSources?.tags = vm.folders
+        self.allTableView.reloadData()
+    }
+    func displayFiles(vm: [File]) {
+        self.files = vm
+        self.allTableView.reloadData()
+    }
+    
+    func expandFolders() {
+        
+        if self.folderHeight < 240 {
+            self.folderHeight = CGFloat((self.folderSources!.tags.count/3 + 1) * 143 + 52)
+            self.allTableView.beginUpdates()
+            self.allTableView.endUpdates()
+            
+        } else {
+            self.folderHeight = 180
+            self.allTableView.beginUpdates()
+            self.allTableView.endUpdates()
+        }
+        
+    }
     
     
 }
@@ -111,7 +162,7 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
 extension ListFilesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 2 + self.files.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -119,19 +170,37 @@ extension ListFilesViewController: UITableViewDataSource {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: TagCollectionTableViewCell.identifier) as! TagCollectionTableViewCell
-//            cell.setCell(collectionHandler: )
+            cell.setCell(collectionHandler: self.tagSources!)
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: FolderCollectionTableViewCell.identifier) as! FolderCollectionTableViewCell
+            cell.setCell(collectionHandler: self.folderSources!, expandCell: self.expandFolders)
             return cell
         default:
-            return UITableViewCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: FileTableViewCell.identifier) as! FileTableViewCell
+            cell.setCell(file: self.files[row - 2])
+//            cell.setCell(collectionHandler: self.folderSources!, expandCell: self.expandFolders)
+            return cell
+            
         }
     }
 }
 extension ListFilesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 120
+        case 1:
+            return self.folderHeight
+            
+            
+        
+        default:
+            return 72
+        }
     }
     
 }

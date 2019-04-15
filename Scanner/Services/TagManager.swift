@@ -19,6 +19,8 @@ class TagManager {
     
     var tagDict: [String: Tag] = [:]
     
+    
+    
     init() {
         self.realm = try! Realm()
         self.fetchAllTags()
@@ -63,8 +65,23 @@ class TagManager {
     func realmTagFor(tag: Tag) -> RealmTag? {
         return realm.object(ofType: RealmTag.self, forPrimaryKey: tag.identifier)
     }
-    func fetchFolders() -> [Tag] {
+    func fetchTopFolders() -> [Tag] {
+        
         return Array(self.tagDict.values).filter({ $0.name == "Folder" }).first!.childTags
+    }
+    func fetchTopFolderTag() -> Tag {
+        return self.tagDict.values.filter({$0.name == "Folder"}).first!
+    }
+    func fetchTags() -> [Tag] {
+        var folders = self.fetchTopFolders().map { (t) -> String in
+            return t.identifier
+        }
+        folders.append(self.fetchTopFolderTag().identifier)
+        let folderSet = Set(folders)
+        let allTags = Set(self.tagDict.keys)
+        let tags = allTags.subtracting(folderSet)
+        
+        return Array(self.tagDict.filter({tags.contains($0.key)}).values)
     }
     func getFolderFor(file: File) {
         

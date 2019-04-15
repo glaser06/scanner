@@ -11,10 +11,12 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 protocol ListFilesPresentationLogic
 {
-    
+    func presentTags(response: ListFiles.FetchTags.Response)
+    func presentFiles(response: [File])
 }
 
 class ListFilesPresenter: ListFilesPresentationLogic
@@ -22,6 +24,25 @@ class ListFilesPresenter: ListFilesPresentationLogic
     weak var viewController: ListFilesDisplayLogic?
     
     // MARK: Do something
-    
+    func presentTags(response: ListFiles.FetchTags.Response) {
+        let models = response.tags.map { (t) -> ListFiles.TagModel in
+            
+            
+            return ListFiles.TagModel.init(name: t.name, color: UIColor.randomFlat(), count: "3")
+        }
+        let folders = response.folders.map { (t) -> ListFiles.TagModel in
+            let colors: [UIColor] = [UIColor.flatRed(), UIColor.flatBlue(), UIColor.flatGray(), UIColor.flatMint(), UIColor.flatTeal() ]
+            return ListFiles.TagModel.init(name: t.name, color: colors.randomElement()!, count: "3")
+        }
+        let vm = ListFiles.FetchTags.ViewModel.init(tags: models, folders: folders)
+        self.viewController?.displayTags(vm: vm)
+    }
+    func presentFiles(response: [File]) {
+        
+//        let fileModels = response.files.map { (f) -> ListFiles.FileModel in
+//            ListFiles.FileModel.init(name: f.name, date: DatePresenter.fullDateString(date: f.date), image: f.cacheImage!)
+//        }
+        self.viewController?.displayFiles(vm: response)
+    }
     
 }

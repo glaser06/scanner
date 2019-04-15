@@ -37,7 +37,7 @@ class TestGenerator {
             tag.parentTag = parentTag
             tag.write(dataStore: TagManager.sharedInstance)
             if parentTag.name == "Folder" {
-                for i in 0...3 {
+                for i in 0...14 {
                     let tag = Tag(name: "Another Tag \(i)")
                     tag.parentTag = parentTag
                     tag.write(dataStore: TagManager.sharedInstance)

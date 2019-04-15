@@ -14,7 +14,7 @@ import UIKit
 
 protocol ShowFileBusinessLogic
 {
-    
+    func saveFile(request: ShowFile.SaveFile.Request)
     func fetchFile()
 }
 
@@ -27,6 +27,8 @@ class ShowFileInteractor: ShowFileBusinessLogic, ShowFileDataStore
 {
     var presenter: ShowFilePresentationLogic?
     var worker: ShowFileWorker?
+//    var fileWorker : FileWorker!
+    var fpManager = FilePageManager.sharedInstance
     var file: File?
     
     
@@ -35,8 +37,18 @@ class ShowFileInteractor: ShowFileBusinessLogic, ShowFileDataStore
         if let f = self.file {
             self.presenter?.presentFile(response: ShowFile.FetchFile.Response.init(file: f))
         } else {
+            self.file = FileWorker.newFile()
             self.presenter?.presentNewFile()
         }
+    }
+    func saveFile(request: ShowFile.SaveFile.Request) {
+        let images = request.pageImages
+        let fileWorker = FileWorker()
+        self.file = fileWorker.addPagesTo(file: self.file!, pageImages: images)
+        self.file?.write(dataStore: fpManager)
+        self.file = nil
+        self.presenter?.dismiss()
+        
     }
     
     

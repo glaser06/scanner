@@ -15,7 +15,7 @@ import UIKit
 protocol ListFilesBusinessLogic
 {
     func fetchTags()
-
+    func fetchFiles()
 }
 
 protocol ListFilesDataStore
@@ -28,12 +28,20 @@ class ListFilesInteractor: ListFilesBusinessLogic, ListFilesDataStore
     var presenter: ListFilesPresentationLogic?
     var worker: ListFilesWorker?
     var tagManager: TagManager = TagManager.sharedInstance
+    
     //var name: String = ""
     
     // MARK: Do something
     func fetchTags() {
-        let folders = self.tagManager.fetchFolders()
+        let tags = self.tagManager.fetchTags()
+        let folders = self.tagManager.fetchTopFolders()
         print(folders)
+        self.presenter?.presentTags(response: ListFiles.FetchTags.Response.init(tags: tags, folders: folders ))
+    }
+    func fetchFiles() {
+        let fileManager: FilePageManager = FilePageManager.sharedInstance
+        let files = fileManager.fetchFiles()
+        self.presenter?.presentFiles(response: files)
     }
     
 }

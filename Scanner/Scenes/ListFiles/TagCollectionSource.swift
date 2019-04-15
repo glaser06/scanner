@@ -20,10 +20,24 @@ class TagCollectionSource: NSObject {
 extension TagCollectionSource: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return self.tags.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        
+        let tag = self.tags[indexPath.item]
+        if collectionView.tag == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainTagCollectionViewCell.identifier, for: indexPath) as! MainTagCollectionViewCell
+            cell.setCell(name: tag.name, count: tag.count, color: tag.color)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FolderCollectionViewCell.identifier, for: indexPath) as! FolderCollectionViewCell
+            cell.setCell(name: tag.name)
+            return cell
+        }
+        
+        
+        
+        
     }
     
 }

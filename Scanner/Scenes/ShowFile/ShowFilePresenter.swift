@@ -16,6 +16,7 @@ protocol ShowFilePresentationLogic
 {
     func presentNewFile()
     func presentFile(response: ShowFile.FetchFile.Response)
+    func dismiss()
 }
 
 class ShowFilePresenter: ShowFilePresentationLogic
@@ -26,9 +27,12 @@ class ShowFilePresenter: ShowFilePresentationLogic
     
     
     func presentNewFile() {
-        
+        self.viewController?.displayNewFile()
     }
     func presentFile(response: ShowFile.FetchFile.Response) {
         
+    }
+    func dismiss() {
+        viewController?.dismiss(animated: true, completion: nil)
     }
 }

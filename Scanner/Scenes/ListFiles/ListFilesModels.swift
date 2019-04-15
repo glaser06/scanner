@@ -20,6 +20,15 @@ enum ListFiles
         var color: UIColor
         var count: String
     }
+    struct FolderModel {
+        var name: String
+        var images: [UIImage] = [] 
+    }
+    struct FileModel {
+        var name: String
+        var date: String
+        var image: UIImage
+    }
     enum FetchTags {
         struct Request
         {
@@ -28,9 +37,28 @@ enum ListFiles
         {
             var tags: [Tag]
             var folders: [Tag]
+            
         }
         struct ViewModel
         {
+            var tags: [TagModel]
+            var folders: [TagModel]
+            
+        }
+    }
+    enum FetchFiles {
+        struct Request
+        {
+        }
+        struct Response
+        {
+            var files: [File]
+            
+        }
+        struct ViewModel
+        {
+            var files: [File]
+            
         }
     }
     

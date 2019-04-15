@@ -12,11 +12,13 @@
 
 import UIKit
 import DeviceKit
+import WeScan
 
 protocol ShowFileDisplayLogic: class
 {
     func displayNewFile()
     func displayFile(vm: ShowFile.FetchFile.ViewModel)
+    func dismiss(animated: Bool, completion: (() -> Void)?)
 }
 
 class ShowFileViewController: UIViewController, ShowFileDisplayLogic
@@ -73,44 +75,76 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         super.viewDidLoad()
 //        self.addSwipeGesture()
         self.setupPageCollectionView()
-        
+//        self.view.isHidden = true
+        self.editViewSwipeGesture()
         self.fetchFile()
+    }
+    var openToScan: Bool = false
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        self.view.isHidden = openToScan
+        
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if openToScan {
+//            self.addNewPage()
+            openToScan = false
+        } else {
+
+        }
     }
     
     func setupPageCollectionView() {
-        
         let device = Device.init()
         let width = self.view.bounds.width - 48
-        var height = self.pageCollectionView.frame.height - 48
+        let insets = (self.pageCollectionView.contentInset.top + self.pageCollectionView.contentInset.bottom)
+        var height = self.pageCollectionView.frame.height - insets
+        let viewHeight = self.view.frame.height
+        let bottomHeight = self.bottomView.frame.height
+        let restOfScreen: CGFloat = 290
         if device.isOneOf([.iPhoneX,.iPhoneXsMax,.iPhoneXs,.iPhoneXr]) {
-            let constant: CGFloat = 40 + 80 + 108 + 48
-            let insets = (self.pageCollectionView.contentInset.top + self.pageCollectionView.contentInset.bottom)
-            let viewHeight = self.view.frame.height
-            let bottomHeight = self.bottomView.frame.height
-            height = viewHeight - bottomHeight - constant - insets
+            let constant: CGFloat = 44 + 34 // iphoneX top and bottom safe areas
             
+            
+            height = viewHeight - constant - restOfScreen - 16
+            
+        } else {
+            let constant: CGFloat = 20 // regular iphone top safe areas
+            height = viewHeight - restOfScreen - 16 - constant
         }
-        
-        
-        
-        print(self.view.bounds.height, self.bottomView.frame.height)
-        print(height)
-        
         (self.pageCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = CGSize(width: width, height: height)
+        print(height, viewHeight)
+
 
         let cellsToRegister: Array<DisplayableCell.Type> = [
             NewPageCollectionViewCell.self,
+            PageImageCollectionViewCell.self
         ]
         for cellType in cellsToRegister {
             self.pageCollectionView.register(UINib(nibName: cellType.nibName, bundle: nil), forCellWithReuseIdentifier: cellType.identifier)
             
         }
         
+        
         //        let searchBar = UISearchBar()
         //        searchBar.searchBarStyle = .minimal
         //
         //        self.allTableView.tableHeaderView = searchBar
     }
+    
+    func editViewSwipeGesture() {
+        let upGesture = UISwipeGestureRecognizer()
+        upGesture.direction = .up
+        upGesture.addTarget(self, action: #selector(scrollToEdit))
+        let downGesture = UISwipeGestureRecognizer()
+        downGesture.direction = .down
+        downGesture.addTarget(self, action: #selector(scrollToTop))
+        self.view.addGestureRecognizer(upGesture)
+        self.view.addGestureRecognizer(downGesture)
+    }
+    
     func addSwipeGesture() {
         let downGesture = UISwipeGestureRecognizer()
         downGesture.cancelsTouchesInView = false
@@ -126,6 +160,15 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         tapGesture.cancelsTouchesInView = false
         
         self.pageCollectionView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func scrollToTop() {
+        self.nameField.textAlignment = .center
+        self.scrollView.scrollToTop(animated: true)
+    }
+    @objc func scrollToEdit() {
+        self.nameField.textAlignment = .left
+        self.scrollView.scrollToView(view: self.nameFieldContainer, animated: true)
     }
     
     @objc func animateFormExpansion() {
@@ -146,17 +189,49 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
     
     // MARK: Do something
     
+    var scanners: [ImageScannerController] = []
+    var scannerResults : [ImageScannerResults] = []
+    
     //@IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var formHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var bottomView: UIView!
     
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var nameFieldContainer: UIView!
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     @IBOutlet weak var pageCollectionView: UICollectionView!
 //    @IBOutlet weak var
     
+    func newScanner() -> ImageScannerController {
+        let scannerViewController = ImageScannerController()
+        
+        scannerViewController.imageScannerDelegate = self
+        //        self.scanners.append(scannerViewController)
+        
+        return scannerViewController
+    }
+    
+    func presentScanner(scanner: ImageScannerController, animated: Bool) {
+        present(scanner, animated: animated)
+    }
+    
+    @IBAction func addNewPage() {
+        if openToScan {
+            self.presentScanner(scanner: self.newScanner(), animated: true)
+        } else {
+            self.presentScanner(scanner: self.newScanner(), animated: true)
+        }
+    }
+    
+    
+    
     @IBAction func save () {
-        self.dismiss(animated: true, completion: nil)
+        let images: [UIImage] = self.scannerResults.map({ $0.doesUserPreferEnhancedImage ? $0.enhancedImage! : $0.scannedImage })
+        self.interactor?.saveFile(request: ShowFile.SaveFile.Request.init(pageImages: images))
     }
     
     @IBAction func cancel() {
@@ -167,7 +242,7 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         self.interactor?.fetchFile()
     }
     func displayNewFile() {
-        
+        self.openToScan = true
     }
     func displayFile(vm: ShowFile.FetchFile.ViewModel) {
         
@@ -176,23 +251,79 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
 extension ShowFileViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        
+        return self.scanners.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
-        
+        guard indexPath.row < self.scanners.count else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
+            cell.setCell()
+            
+            return cell
+            
+        }
+        let index = indexPath.row
+        let result = self.scannerResults[index]
+        var image = result.scannedImage
+        if result.doesUserPreferEnhancedImage {
+            image = result.enhancedImage!
+        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageImageCollectionViewCell.identifier, for: indexPath) as! PageImageCollectionViewCell
+        cell.setCell(image: image)
         return cell
+        
     }
     
 }
 extension ShowFileViewController: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let index = indexPath.item
+        guard index < self.scanners.count else {
+            self.addNewPage()
+            return
+        }
+        
+        let scanner = self.scanners[index]
+        self.presentScanner(scanner: scanner, animated: true)
+    }
 }
 
 extension ShowFileViewController: UITextFieldDelegate {
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        textField.textAlignment = .left
+        self.scrollToEdit()
+        return true
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
         return false
+    }
+}
+extension ShowFileViewController: ImageScannerControllerDelegate {
+    
+    func imageScannerController(_ scanner: ImageScannerController, didFinishScanningWithResults results: ImageScannerResults) {
+        var existingScanner = false
+        for (index, sc) in self.scanners.enumerated() {
+            if scanner == sc {
+                existingScanner = true
+                self.scannerResults[index] = results
+            }
+        }
+        if !existingScanner {
+            self.scannerResults.append(results)
+            self.scanners.append(scanner)
+        }
+        self.pageCollectionView.reloadData()
+        self.pageCollectionView.scrollToItem(at: IndexPath(item: self.scannerResults.count - 1, section: 0), at: .centeredHorizontally, animated: false)
+        scanner.dismiss(animated: true, completion: nil)
+    }
+    func imageScannerController(_ scanner: ImageScannerController, didFailWithError error: Error) {
+        print("scanner erred", error)
+        
+    }
+    func imageScannerControllerDidCancel(_ scanner: ImageScannerController) {
+        scanner.dismiss(animated: true, completion: nil)
     }
 }

@@ -14,6 +14,10 @@ class InitialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+//        self.startOver()
+        
+    }
+    func startOver() {
         let realm = try! Realm()
         try! realm.write {
             realm.deleteAll()
@@ -21,6 +25,7 @@ class InitialViewController: UIViewController {
         
         TestGenerator.addTags()
         TestGenerator.addChildTags()
+
     }
     override func viewDidAppear(_ animated: Bool) {
         let storyboard = self.storyboard

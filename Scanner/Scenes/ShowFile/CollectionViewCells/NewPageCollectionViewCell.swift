@@ -17,6 +17,18 @@ class NewPageCollectionViewCell: UICollectionViewCell, DisplayableCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+    }
+    
+    func setCell() {
+//        https://stackoverflow.com/questions/13679923/dashed-line-border-around-uiview
+        var yourViewBorder = CAShapeLayer()
+        yourViewBorder.strokeColor = UIColor.black.cgColor
+        yourViewBorder.lineDashPattern = [2, 2]
+        yourViewBorder.frame = self.bounds
+        yourViewBorder.fillColor = nil
+        yourViewBorder.path = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.addSublayer(yourViewBorder)
     }
 
 }

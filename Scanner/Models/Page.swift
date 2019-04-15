@@ -12,7 +12,8 @@ import RealmSwift
 
 class Page {
     var identifier: String = ""
-    var file: File
+//    https://medium.com/flawless-app-stories/memory-leaks-in-swift-bfd5f95f3a74 break the circle of reference
+    weak var file: File?
     var pageName: String = ""
     var image: UIImage?
     var pageNumber: Int = 0

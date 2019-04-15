@@ -26,6 +26,9 @@ class MainTagCollectionViewCell: UICollectionViewCell {
         self.backView.backgroundColor = color
         self.nameLabel.text = name
         self.countLabel.text = count
+        self.isHeightCalculated = false
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
     }
     
     

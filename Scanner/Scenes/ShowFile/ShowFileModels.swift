@@ -28,6 +28,20 @@ enum ShowFile
         {
         }
     }
-    
+    enum SaveFile
+    {
+        struct Request
+        {
+            var pageImages: [UIImage]
+        }
+        struct Response
+        {
+            
+        }
+        struct ViewModel
+        {
+            
+        }
+    }
     
 }

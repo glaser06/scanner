@@ -10,8 +10,8 @@ import UIKit
 
 class PageImageCollectionViewCell: UICollectionViewCell, DisplayableCell {
     
-    static var identifier: String = ""
-    static var nibName: String = ""
+    static var identifier: String = "PageCell"
+    static var nibName: String = "PageImageCollectionViewCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,7 +20,7 @@ class PageImageCollectionViewCell: UICollectionViewCell, DisplayableCell {
     @IBOutlet weak var imageView: UIImageView!
     
     func setCell(image: UIImage) {
-        
+        self.imageView.image = image
     }
 
 }

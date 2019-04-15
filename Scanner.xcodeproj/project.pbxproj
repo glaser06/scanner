@@ -55,6 +55,9 @@
 		E39FF332225D655F00219FE7 /* FilePageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF331225D655F00219FE7 /* FilePageManager.swift */; };
 		E39FF334225D86C500219FE7 /* TestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF333225D86C500219FE7 /* TestGenerator.swift */; };
 		E3B5DD22225DA0DE00ECDB4D /* CellDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */; };
+		E3C1EF7422643DDB0035B9BA /* DatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C1EF7322643DDB0035B9BA /* DatePresenter.swift */; };
+		E3C1EF76226449F70035B9BA /* RealmSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C1EF75226449F70035B9BA /* RealmSetting.swift */; };
+		E3D288722262640300DB2D30 /* FileWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D288712262640300DB2D30 /* FileWorker.swift */; };
 		E3DA41D9225C44FB0044D547 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41D8225C44FB0044D547 /* File.swift */; };
 		E3DA41DB225C45090044D547 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41DA225C45090044D547 /* Page.swift */; };
 		E3DA41DD225C45680044D547 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41DC225C45680044D547 /* Tag.swift */; };
@@ -114,6 +117,9 @@
 		E39FF331225D655F00219FE7 /* FilePageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePageManager.swift; sourceTree = "<group>"; };
 		E39FF333225D86C500219FE7 /* TestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGenerator.swift; sourceTree = "<group>"; };
 		E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDataProtocol.swift; sourceTree = "<group>"; };
+		E3C1EF7322643DDB0035B9BA /* DatePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePresenter.swift; sourceTree = "<group>"; };
+		E3C1EF75226449F70035B9BA /* RealmSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSetting.swift; sourceTree = "<group>"; };
+		E3D288712262640300DB2D30 /* FileWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileWorker.swift; sourceTree = "<group>"; };
 		E3DA41D8225C44FB0044D547 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		E3DA41DA225C45090044D547 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		E3DA41DC225C45680044D547 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -217,6 +223,7 @@
 		E31C1BF2225BFDA100A124BE /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				E3D288712262640300DB2D30 /* FileWorker.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -285,6 +292,7 @@
 				E39FF32B225D40B500219FE7 /* RealmFile.swift */,
 				E39FF32D225D40BA00219FE7 /* RealmTag.swift */,
 				E39FF32F225D40C100219FE7 /* RealmNameTemplate.swift */,
+				E3C1EF75226449F70035B9BA /* RealmSetting.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -321,6 +329,7 @@
 				E39FF302225D176800219FE7 /* UIViewExtension.swift */,
 				E39FF303225D176800219FE7 /* UITextFieldExtension.swift */,
 				E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */,
+				E3C1EF7322643DDB0035B9BA /* DatePresenter.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -516,6 +525,7 @@
 				E31C1BFC225BFE0C00A124BE /* ListFilesModels.swift in Sources */,
 				E345F5D3225FADDF00585793 /* ShowFileRouter.swift in Sources */,
 				E39FF313225D19CA00219FE7 /* TagCollectionTableViewCell.swift in Sources */,
+				E3D288722262640300DB2D30 /* FileWorker.swift in Sources */,
 				E31C1BFD225BFE0C00A124BE /* ListFilesViewController.swift in Sources */,
 				E345F5D1225FADDF00585793 /* ShowFilePresenter.swift in Sources */,
 				E345F5D2225FADDF00585793 /* ShowFileWorker.swift in Sources */,
@@ -525,6 +535,7 @@
 				E31C1BE0225BFD8D00A124BE /* InitialViewController.swift in Sources */,
 				E3DA41D9225C44FB0044D547 /* File.swift in Sources */,
 				E39FF321225D1C0900219FE7 /* FilterConditionsTableViewCell.swift in Sources */,
+				E3C1EF7422643DDB0035B9BA /* DatePresenter.swift in Sources */,
 				E345F5DA225FB91E00585793 /* PageImageCollectionViewCell.swift in Sources */,
 				E345F5D4225FADDF00585793 /* ShowFileModels.swift in Sources */,
 				E3DA41DB225C45090044D547 /* Page.swift in Sources */,
@@ -533,6 +544,7 @@
 				E39FF305225D176900219FE7 /* UITextFieldExtension.swift in Sources */,
 				E31C1BDE225BFD8D00A124BE /* AppDelegate.swift in Sources */,
 				E39FF325225D258F00219FE7 /* FormTableViewCell.swift in Sources */,
+				E3C1EF76226449F70035B9BA /* RealmSetting.swift in Sources */,
 				E39FF332225D655F00219FE7 /* FilePageManager.swift in Sources */,
 				E39FF330225D40C100219FE7 /* RealmNameTemplate.swift in Sources */,
 				E31C1BFE225BFE0C00A124BE /* ListFilesInteractor.swift in Sources */,

@@ -18,7 +18,7 @@ class TagCollectionTableViewCell: UITableViewCell, DisplayableCell {
         // Initialization code
         if let collectionViewFlowLayout = self.tagCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             
-                        collectionViewFlowLayout.estimatedItemSize = CGSize(width: 44, height: 56)
+                        collectionViewFlowLayout.estimatedItemSize = CGSize(width: 44, height: 40)
 //            collectionViewFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
             
         }
@@ -28,6 +28,7 @@ class TagCollectionTableViewCell: UITableViewCell, DisplayableCell {
     @IBOutlet weak var tagCollectionView: UICollectionView!
     
     func setCell(collectionHandler: UICollectionViewDataSource & UICollectionViewDelegate) {
+        self.tagCollectionView.tag = 1
         self.tagCollectionView.delegate = collectionHandler
         self.tagCollectionView.dataSource = collectionHandler
         self.tagCollectionView.reloadData()
