@@ -23,8 +23,15 @@ class FolderCollectionTableViewCell: UITableViewCell, DisplayableCell {
         (self.folderCollectionView.collectionViewLayout as! UICollectionViewFlowLayout).itemSize = CGSize(width: cellWidth, height: cellWidth+24)
     }
     @IBOutlet weak var folderCollectionView: UICollectionView!
+    @IBOutlet weak var expandButton: UIButton!
     
     @IBAction func expand() {
+        
+        if expandButton.currentTitle == "SHOW ALL" {
+            expandButton.setTitle("HIDE ALL", for: .normal)
+        } else {
+            expandButton.setTitle("SHOW ALL", for: .normal)
+        }
         if let f = self.expandCell {
             f()
         }

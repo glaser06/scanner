@@ -19,6 +19,8 @@ class TagManager {
     
     var tagDict: [String: Tag] = [:]
     
+    var folders: [String: Tag] = [:]
+    
     
     
     init() {
@@ -39,6 +41,7 @@ class TagManager {
         for realmTag in realmTags {
             self.buildTagTree(parentTag: realmTag)
         }
+//        self.fetchAllFolders()
 //        printChildTags()
     }
     private func buildTagTree(parentTag: RealmTag) {
@@ -65,6 +68,18 @@ class TagManager {
     func realmTagFor(tag: Tag) -> RealmTag? {
         return realm.object(ofType: RealmTag.self, forPrimaryKey: tag.identifier)
     }
+    func fetchAllFolders() {
+        let topFolder = self.fetchTopFolderTag()
+        var children = topFolder.childTags
+        while !children.isEmpty {
+            var nextVisit: [Tag] = []
+            for folder in children {
+                self.folders[folder.identifier] = folder
+                nextVisit = nextVisit + folder.childTags
+            }
+            children = nextVisit
+        }
+    }
     func fetchTopFolders() -> [Tag] {
         
         return Array(self.tagDict.values).filter({ $0.name == "Folder" }).first!.childTags
@@ -83,9 +98,28 @@ class TagManager {
         
         return Array(self.tagDict.filter({tags.contains($0.key)}).values)
     }
-    func getFolderFor(file: File) {
-        
+//    returns index, tag of the folder tag
+    func getFolderFor(file: File) -> (index: Int, tag: Tag?) {
+        for (index, tag) in file.tags.enumerated() {
+            if self.folders[tag.identifier] != nil {
+                return (index, tag)
+            }
+        }
+        return (-1, nil)
     }
+    func isFolder(tag: Tag) -> Bool {
+        return self.folders[tag.identifier] != nil
+    }
+    
+    func filesForTag(tag: Tag) -> [File] {
+        let realmFiles = realm.object(ofType: RealmTag.self, forPrimaryKey: tag.identifier)?.files
+        
+        let files = realmFiles?.map({ (r) -> File in
+            return r.file
+        })
+        return Array(files!)
+    }
+    
     
 }
 extension TagManager: DataStore {

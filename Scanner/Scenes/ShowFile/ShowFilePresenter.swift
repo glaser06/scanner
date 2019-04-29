@@ -14,7 +14,7 @@ import UIKit
 
 protocol ShowFilePresentationLogic
 {
-    func presentNewFile()
+    func presentNewFile(response: ShowFile.FetchFile.Response)
     func presentFile(response: ShowFile.FetchFile.Response)
     func dismiss()
 }
@@ -26,11 +26,28 @@ class ShowFilePresenter: ShowFilePresentationLogic
     // MARK: Do something
     
     
-    func presentNewFile() {
-        self.viewController?.displayNewFile()
+    func presentNewFile(response: ShowFile.FetchFile.Response) {
+        let file = response.file
+        self.viewController?.displayNewFile(vm: ShowFile.FetchFile.ViewModel.init(file: ShowFile.FileModel.init(name: file.name, date: DatePresenter.fullDateString(date: file.date), pageImages: [], location: nil, fullAddress: "", tags: [], notes: "", folder: "")))
     }
     func presentFile(response: ShowFile.FetchFile.Response) {
-        
+        let file = response.file
+        let pageImgs = file.pages.map { (p) -> UIImage in
+            return p.image!
+        }
+        let tagModels = file.tags.filter({ (tag) -> Bool in
+            return !TagManager.sharedInstance.isFolder(tag: tag)
+        }).map { (tag) -> ListFiles.TagModel in
+            return ListFiles.TagModel.init(name: tag.name, color: UIColor.randomFlat(), count: "3")
+        }
+        let (index, folder) = TagManager.sharedInstance.getFolderFor(file: file)
+        var folderName = ""
+        if index == -1 {
+            folderName = "Add Folder"
+        } else {
+            folderName = folder!.name
+        }
+        self.viewController?.displayFile(vm: ShowFile.FetchFile.ViewModel.init(file: ShowFile.FileModel.init(name: file.name, date: DatePresenter.fullDateString(date: file.date), pageImages: pageImgs, location: nil, fullAddress: "", tags: tagModels, notes: file.notes, folder: folderName)))
     }
     func dismiss() {
         viewController?.dismiss(animated: true, completion: nil)

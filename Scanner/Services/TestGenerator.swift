@@ -13,12 +13,26 @@ import RealmSwift
 class TestGenerator {
     
     static func addTags () {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.delete(realm.objects(RealmTag.self))
+        }
+        
         let folderTag = Tag(name: "Folder")
         let workTag = Tag(name: "Work")
         let housesTag = Tag(name: "Houses")
+        let another = Tag(name: "Another Tag")
+        let receipts = Tag(name: "Receipts")
+        var tags: [Tag] = []
+        for i in 0...10 {
+            let tag = Tag(name: "another \(i)")
+            tags.append(tag)
+        }
+        tags.append(contentsOf: [folderTag, workTag, housesTag, another, receipts])
+        
         
         let store = TagManager.sharedInstance
-        for each in [folderTag, workTag, housesTag] {
+        for each in  tags {
             each.write(dataStore: store)
         }
     }
@@ -33,11 +47,9 @@ class TestGenerator {
 //        tag.parentTag = realmTags!.tag
 //        tag.write(dataStore: TagManager.sharedInstance)
         for parentTag in tags {
-            let tag = Tag(name: "Another Tag")
-            tag.parentTag = parentTag
-            tag.write(dataStore: TagManager.sharedInstance)
+            
             if parentTag.name == "Folder" {
-                for i in 0...14 {
+                for i in 0...4 {
                     let tag = Tag(name: "Another Tag \(i)")
                     tag.parentTag = parentTag
                     tag.write(dataStore: TagManager.sharedInstance)
@@ -46,4 +58,6 @@ class TestGenerator {
         }
     }
     
+    
 }
+

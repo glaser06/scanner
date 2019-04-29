@@ -12,17 +12,31 @@
 
 import UIKit
 
+protocol ItemModel {
+    static func empty() -> ItemModel
+//    static var empty: ItemModel { get set }
+}
 enum ListFiles
 {
     // MARK: Use cases
-    struct TagModel {
+    
+    struct TagModel: ItemModel {
+        
+        
         var name: String
         var color: UIColor
         var count: String
+        static func empty() -> ItemModel {
+            return TagModel(name: "", color: UIColor.clear, count: "0")
+        }
+        
     }
-    struct FolderModel {
+    struct FolderModel: ItemModel {
         var name: String
-        var images: [UIImage] = [] 
+        var images: [UIImage] = []
+        static func empty() -> ItemModel {
+            return FolderModel(name: "", images: [])
+        }
     }
     struct FileModel {
         var name: String
@@ -42,7 +56,7 @@ enum ListFiles
         struct ViewModel
         {
             var tags: [TagModel]
-            var folders: [TagModel]
+            var folders: [FolderModel]
             
         }
     }

@@ -11,10 +11,22 @@
 //
 
 import UIKit
+import CoreLocation
 
 enum ShowFile
 {
     // MARK: Use cases
+    
+    struct FileModel {
+        var name: String
+        var date: String
+        var pageImages: [UIImage]
+        var location: CLLocationCoordinate2D?
+        var fullAddress: String
+        var tags: [ListFiles.TagModel]
+        var notes: String
+        var folder: String
+    }
     
     enum FetchFile {
         struct Request
@@ -26,12 +38,14 @@ enum ShowFile
         }
         struct ViewModel
         {
+            var file: FileModel
         }
     }
     enum SaveFile
     {
         struct Request
         {
+            var file: FileModel
             var pageImages: [UIImage]
         }
         struct Response

@@ -30,21 +30,34 @@ class ShowFileInteractor: ShowFileBusinessLogic, ShowFileDataStore
 //    var fileWorker : FileWorker!
     var fpManager = FilePageManager.sharedInstance
     var file: File?
+    var isNewFile: Bool = false
     
     
     // MARK: Do something
     func fetchFile() {
         if let f = self.file {
-            self.presenter?.presentFile(response: ShowFile.FetchFile.Response.init(file: f))
+            let fileWorker = FileWorker()
+            print(f.tags)
+            if let fileWithPages = fileWorker.fetchPagesFor(file: f) {
+                self.file = fileWithPages
+            }
+            
+            self.presenter?.presentFile(response: ShowFile.FetchFile.Response.init(file: self.file!))
         } else {
+            self.isNewFile = true
             self.file = FileWorker.newFile()
-            self.presenter?.presentNewFile()
+            self.presenter?.presentNewFile(response: ShowFile.FetchFile.Response.init(file: file!))
         }
     }
     func saveFile(request: ShowFile.SaveFile.Request) {
         let images = request.pageImages
+        self.file!.name = request.file.name
+        self.file!.notes = request.file.notes
+        
+        
         let fileWorker = FileWorker()
         self.file = fileWorker.addPagesTo(file: self.file!, pageImages: images)
+        print(self.file?.tags)
         self.file?.write(dataStore: fpManager)
         self.file = nil
         self.presenter?.dismiss()

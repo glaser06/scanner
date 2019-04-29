@@ -28,6 +28,56 @@ class FileWorker {
         print(realmFile.identifier)
         return realmFile.file
     }
+    func fetchPagesFor(file: File) -> File? {
+        
+        if let realmFile = realm.object(ofType: RealmFile.self, forPrimaryKey: file.identifier) {
+            var pages: [Page] = []
+            for realmPage in realmFile.pages {
+                let page = Page(realmPage: realmPage, file: file)
+                pages.append(page)
+            }
+            file.pages = pages
+            return file
+        }
+        return nil
+        
+        
+    }
+    func fetchFolderFor(file: File) -> File? {
+        if let realmFile = realm.object(ofType: RealmFile.self, forPrimaryKey: file.identifier) {
+            let tagManager = TagManager.sharedInstance
+            
+            //            print("file tags",realmFile.tags.count)
+            for realmTag in realmFile.tags {
+                if tagManager.folders[realmTag.identifier] != nil {
+                    file.folder = tagManager.tagDict[realmTag.identifier]
+                }
+            }
+            
+            return file
+        }
+        return nil
+    }
+    
+//    clean up this function to not use private caches and dicts
+    func fetchTagsFor(file: File) -> File? {
+        
+        if let realmFile = realm.object(ofType: RealmFile.self, forPrimaryKey: file.identifier) {
+            let tagManager = TagManager.sharedInstance
+            var tags: [Tag] = []
+//            print("file tags",realmFile.tags.count)
+            for realmTag in realmFile.tags {
+                let tag = tagManager.tagDict[realmTag.identifier]!
+                tags.append(tag)
+                if tagManager.folders[realmTag.identifier] != nil {
+                    file.folder = tagManager.tagDict[realmTag.identifier]
+                }
+            }
+            file.tags = tags
+            return file
+        }
+        return nil
+    }
     
 //    func firstImageForFile(file: File) -> UIImage {
 //        return file.pages.first!.image!

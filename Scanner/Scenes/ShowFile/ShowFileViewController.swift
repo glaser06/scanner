@@ -13,10 +13,11 @@
 import UIKit
 import DeviceKit
 import WeScan
+import MapKit
 
 protocol ShowFileDisplayLogic: class
 {
-    func displayNewFile()
+    func displayNewFile(vm: ShowFile.FetchFile.ViewModel)
     func displayFile(vm: ShowFile.FetchFile.ViewModel)
     func dismiss(animated: Bool, completion: (() -> Void)?)
 }
@@ -76,7 +77,29 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
 //        self.addSwipeGesture()
         self.setupPageCollectionView()
 //        self.view.isHidden = true
-        self.editViewSwipeGesture()
+        self.refresher = UIRefreshControl()
+        self.scrollView.refreshControl = self.refresher!
+        self.refresher?.addTarget(self, action: #selector(showFormTemplates), for: .allEvents)
+//        let refreshImage = UIImageView()
+//        refreshImage.image = UIImage(named: "search")
+//        refreshImage.frame = self.refresher!.bounds.offsetBy(dx: self.view.frame.size.width / 2 - 16, dy: 10)
+//        refreshImage.frame.size.width = 24 // Whatever width you want
+//        refreshImage.frame.size.height = 24 // Whatever height you want
+//        self.refresherImage = refreshImage
+//        self.refresher?.backgroundColor = UIColor.clear
+//        self.refresher?.tintColor = UIColor.clear
+//        self.refresher?.addSubview(refreshImage)
+        
+        
+        
+        self.tagSource = TagCollectionSource(cellID: ShowTagsCollectionViewCell.identifier, emptyData: ListFiles.TagModel.empty())
+        self.setupTagCollectionView()
+        self.setupFormTableView()
+        
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
+        
+        self.addTagSelectionTap()
         self.fetchFile()
     }
     var openToScan: Bool = false
@@ -95,7 +118,15 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
 
         }
     }
-    
+    func addTagSelectionTap() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.showTagSelection))
+        self.tagCollection.addGestureRecognizer(tap)
+    }
+    func setupFormTableView() {
+        self.formTableView.register(UINib(nibName: AddFormTableViewCell.nibName, bundle: nil), forCellReuseIdentifier: AddFormTableViewCell.identifier)
+        self.formTableView.rowHeight = 66
+        self.formTableHeight.constant = 90
+    }
     func setupPageCollectionView() {
         let device = Device.init()
         let width = self.view.bounds.width - 48
@@ -133,77 +164,76 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         //
         //        self.allTableView.tableHeaderView = searchBar
     }
-    
-    func editViewSwipeGesture() {
-        let upGesture = UISwipeGestureRecognizer()
-        upGesture.direction = .up
-        upGesture.addTarget(self, action: #selector(scrollToEdit))
-        let downGesture = UISwipeGestureRecognizer()
-        downGesture.direction = .down
-        downGesture.addTarget(self, action: #selector(scrollToTop))
-        self.view.addGestureRecognizer(upGesture)
-        self.view.addGestureRecognizer(downGesture)
-    }
-    
-    func addSwipeGesture() {
-        let downGesture = UISwipeGestureRecognizer()
-        downGesture.cancelsTouchesInView = false
-        downGesture.direction = .down
-        downGesture.addTarget(self, action: #selector(animateFormExpansion))
-        let upGesture = UISwipeGestureRecognizer()
-        upGesture.cancelsTouchesInView = false
-        upGesture.direction = .up
-        upGesture.addTarget(self, action: #selector(animateFormContraction))
-        self.view.addGestureRecognizer(downGesture)
-        self.view.addGestureRecognizer(upGesture)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(animateFormContraction))
-        tapGesture.cancelsTouchesInView = false
+    func setupTagCollectionView() {
+        self.tagCollection.register(UINib(nibName: ShowTagsCollectionViewCell.nibName, bundle: nil), forCellWithReuseIdentifier: ShowTagsCollectionViewCell.identifier)
+        self.tagCollection.dataSource = self.tagSource
+        self.tagSource.tags = [ListFiles.TagModel.init(name: "+ Add Tags...", color: UIColor.lightGray, count: "3")]
+        self.tagCollection.collectionViewLayout = LeftAlignedCollectionViewFlowLayout()
+        if let collectionViewFlowLayout = self.tagCollection.collectionViewLayout as? UICollectionViewFlowLayout {
+            collectionViewFlowLayout.estimatedItemSize = CGSize(width: 120, height: 36)
+//            collectionViewFlowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            
+        }
+        self.tagCollection.reloadData()
+        self.tagCollection.layoutIfNeeded()
+        print(self.tagCollection.collectionViewLayout.collectionViewContentSize)
+        self.tagCollectionHeight.constant = self.tagCollection.collectionViewLayout.collectionViewContentSize.height
+        self.tagCollection.reloadData()
+        self.tagCollection.layoutIfNeeded()
+        self.view.layoutIfNeeded()
         
-        self.pageCollectionView.addGestureRecognizer(tapGesture)
+        
+//        print(self.tagCollectionHeight.constant)
+        
     }
     
-    @objc func scrollToTop() {
-        self.nameField.textAlignment = .center
-        self.scrollView.scrollToTop(animated: true)
+    @objc func showFormTemplates() {
+        print("templates shown")
+        self.refresher?.endRefreshing()
     }
-    @objc func scrollToEdit() {
-        self.nameField.textAlignment = .left
-        self.scrollView.scrollToView(view: self.nameFieldContainer, animated: true)
+    @objc func showTagSelection() {
+        self.router?.routeToShowTags(withFolder: false)
     }
     
-    @objc func animateFormExpansion() {
-        let expansionHeight = self.view.frame.height - self.bottomView.frame.height - 120
-        self.formHeightConstraint.constant = expansionHeight
-        UIView.animate(withDuration: 0.2) {
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
-        }
-    }
-    @objc func animateFormContraction() {
-        self.formHeightConstraint.constant = 130
-        UIView.animate(withDuration: 0.2) {
-            self.view.setNeedsLayout()
-            self.view.layoutIfNeeded()
-        }
-    }
     
     // MARK: Do something
+    var refresher: UIRefreshControl?
+    var refresherImage: UIImageView!
+    
+    var tagSource: TagCollectionSource!
+    
+    var viewModel: ShowFile.FileModel?
+    var editingInfo: Bool? = false
     
     var scanners: [ImageScannerController] = []
     var scannerResults : [ImageScannerResults] = []
     
     //@IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var formHeightConstraint: NSLayoutConstraint!
+    
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var bottomView: UIView!
     
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var nameFieldContainer: UIView!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var folderButton: UIButton!
+    
+    @IBOutlet weak var tagCollection: UICollectionView!
+    @IBOutlet weak var tagCollectionHeight: NSLayoutConstraint!
+    @IBOutlet weak var formTableView: UITableView!
+    @IBOutlet weak var formTableHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var notesTextView: UITextView!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var pageCollectionView: UICollectionView!
+    
+    @IBAction func showFolders() {
+        self.router?.routeToShowTags(withFolder: true)
+    }
 //    @IBOutlet weak var
     
     func newScanner() -> ImageScannerController {
@@ -231,7 +261,7 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
     
     @IBAction func save () {
         let images: [UIImage] = self.scannerResults.map({ $0.doesUserPreferEnhancedImage ? $0.enhancedImage! : $0.scannedImage })
-        self.interactor?.saveFile(request: ShowFile.SaveFile.Request.init(pageImages: images))
+        self.interactor?.saveFile(request: ShowFile.SaveFile.Request.init(file: self.viewModel!, pageImages: images) )
     }
     
     @IBAction func cancel() {
@@ -241,37 +271,133 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
     func fetchFile() {
         self.interactor?.fetchFile()
     }
-    func displayNewFile() {
+    
+    func displayNewFile(vm: ShowFile.FetchFile.ViewModel) {
         self.openToScan = true
-    }
-    func displayFile(vm: ShowFile.FetchFile.ViewModel) {
+        self.viewModel = vm.file
+        
+        self.setFileInfo(new: true)
         
     }
+    
+    func displayFile(vm: ShowFile.FetchFile.ViewModel) {
+        self.viewModel = vm.file
+        
+        self.setFileInfo(new: false)
+        
+    }
+    func setFileInfo(new: Bool) {
+        guard let vm = self.viewModel else {
+            return
+        }
+        self.pageCollectionView.reloadData()
+        if new {
+            self.nameField.placeholder = self.viewModel?.name
+            self.dateLabel.text = vm.date
+        } else {
+            self.nameField.text = self.viewModel?.name
+            self.dateLabel.text = vm.date
+            self.notesTextView.text = vm.notes
+            self.folderButton.setTitle(vm.folder, for: .normal)
+            if vm.tags.count > 0 {
+                self.tagSource.tags = vm.tags
+                self.tagCollection.reloadData()
+                self.tagCollection.setNeedsLayout()
+                self.tagCollection.layoutIfNeeded()
+                
+                print(self.tagCollection.collectionViewLayout.collectionViewContentSize)
+                self.tagCollectionHeight.constant = self.tagCollection.collectionViewLayout.collectionViewContentSize.height
+//                apparently this works so that tags are layed out correctly with the right height...
+                self.tagCollection.reloadData()
+                self.tagCollection.setNeedsLayout()
+                self.tagCollection.layoutIfNeeded()
+                self.tagCollection.reloadData()
+                self.tagCollection.setNeedsLayout()
+                self.tagCollection.layoutIfNeeded()
+//                self.view.setNeedsLayout()
+//                self.view.layoutIfNeeded()
+//                self.tagCollection.reloadData()
+//                print(self.tagCollection.collectionViewLayout.collectionViewContentSize)
+//                print(self.tagCollection.collectionViewLayout.collectionViewContentSize)
+//                self.tagCollectionHeight.constant = self.tagCollection.collectionViewLayout.collectionViewContentSize.height + 20
+//                self.view.setNeedsLayout()
+//                self.view.layoutIfNeeded()
+            } else {
+                self.tagSource.tags = [ListFiles.TagModel.init(name: "+ Add Tags...", color: UIColor.lightGray, count: "3")]
+                self.tagCollection.reloadData()
+                print(self.tagCollection.collectionViewLayout.collectionViewContentSize)
+                self.tagCollectionHeight.constant = self.tagCollection.collectionViewLayout.collectionViewContentSize.height
+                //                self.view.setNeedsLayout()
+                //                self.view.layoutIfNeeded()
+                self.tagCollection.reloadData()
+                print(self.tagCollection.collectionViewLayout.collectionViewContentSize)
+            }
+            
+            
+            
+        }
+        
+        
+        
+        
+    }
+    
 }
 extension ShowFileViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return self.scanners.count + 1
+        guard let vm = self.viewModel else {
+            return 1
+        }
+        
+        if vm.pageImages.count == 0 {
+            return self.scanners.count + 1
+        } else {
+            return vm.pageImages.count + 1
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard indexPath.row < self.scanners.count else {
+        let index = indexPath.row
+        guard let vm = self.viewModel else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
             cell.setCell()
             
             return cell
+        }
+        if vm.pageImages.count == 0 {
+            guard indexPath.row < self.scanners.count else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
+                cell.setCell()
+                
+                return cell
+                
+            }
             
+            let result = self.scannerResults[index]
+            var image = result.scannedImage
+            if result.doesUserPreferEnhancedImage {
+                image = result.enhancedImage!
+            }
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageImageCollectionViewCell.identifier, for: indexPath) as! PageImageCollectionViewCell
+            cell.setCell(image: image)
+            return cell
+        } else {
+            guard indexPath.row < vm.pageImages.count else {
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
+                cell.setCell()
+                
+                return cell
+                
+            }
+            let image = vm.pageImages[index]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageImageCollectionViewCell.identifier, for: indexPath) as! PageImageCollectionViewCell
+            cell.setCell(image: image)
+            return cell
         }
-        let index = indexPath.row
-        let result = self.scannerResults[index]
-        var image = result.scannedImage
-        if result.doesUserPreferEnhancedImage {
-            image = result.enhancedImage!
-        }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageImageCollectionViewCell.identifier, for: indexPath) as! PageImageCollectionViewCell
-        cell.setCell(image: image)
-        return cell
+        
         
     }
     
@@ -279,6 +405,12 @@ extension ShowFileViewController: UICollectionViewDataSource {
 extension ShowFileViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let index = indexPath.item
+        guard let vm = self.viewModel else {
+            return
+        }
+        guard vm.pageImages.count == 0 else {
+            return
+        }
         guard index < self.scanners.count else {
             self.addNewPage()
             return
@@ -292,13 +424,22 @@ extension ShowFileViewController: UICollectionViewDelegate {
 extension ShowFileViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         textField.textAlignment = .left
-        self.scrollToEdit()
+        self.editingInfo = true
+        self.snapScroll()
         return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.viewModel?.name = textField.text!
         self.view.endEditing(true)
+        
+        
         return false
+    }
+}
+extension ShowFileViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        self.viewModel?.notes = textView.text
     }
 }
 extension ShowFileViewController: ImageScannerControllerDelegate {
@@ -325,5 +466,102 @@ extension ShowFileViewController: ImageScannerControllerDelegate {
     }
     func imageScannerControllerDidCancel(_ scanner: ImageScannerController) {
         scanner.dismiss(animated: true, completion: nil)
+    }
+}
+extension ShowFileViewController: UIScrollViewDelegate {
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y < 400 {
+//            scrollView.isScrollEnabled = false
+//            scrollView.setContentOffset(CGPoint(x: 0, y: 600), animated: true)
+//            scrollView.isScrollEnabled = true
+//        }
+//    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y <= 0 {
+//            var percentage = scrollView.contentOffset.y / 50 * -1
+//            
+//            if percentage > 1 {
+//                percentage = 1.0
+//                print(percentage)
+//            }
+//            self.refresherImage.transform = CGAffineTransform(scaleX: 1 + percentage, y: 1 + percentage)
+//        }
+// 
+//        
+//    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        guard !decelerate else {
+            return
+        }
+        self.snapScroll()
+    }
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        self.snapScroll()
+    }
+    func snapScroll() {
+//        https://stackoverflow.com/questions/34573143/uiscrollview-snap-to-position-while-scrolling
+        let childStartPoint = scrollView.convert(nameFieldContainer.frame.origin, to: scrollView)
+        if let e = editingInfo {
+            if e {
+                self.nameField.textAlignment = .left
+                scrollView.setContentOffset(CGPoint(x: 0, y: childStartPoint.y), animated: true)
+            } else {
+                self.view.endEditing(true)
+                self.nameField.textAlignment = .center
+                scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            }
+            
+            
+        }
+        scrollView.isScrollEnabled = true
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let childStartPoint = scrollView.convert(nameFieldContainer.frame.origin, to: scrollView)
+        let direction = targetContentOffset.pointee.y - scrollView.contentOffset.y
+        print(direction)
+        print(scrollView.contentOffset.y)
+        print(targetContentOffset.pointee.y)
+        if scrollView.contentOffset.y < childStartPoint.y && velocity.y > 0 {
+            scrollView.isScrollEnabled = false
+            editingInfo = true
+        } else if scrollView.contentOffset.y < childStartPoint.y && velocity.y < 0 {
+            scrollView.isScrollEnabled = false
+            
+            editingInfo = false
+            
+        }  else if targetContentOffset.pointee.y < childStartPoint.y && scrollView.contentOffset.y > childStartPoint.y {
+            scrollView.isScrollEnabled = false
+            editingInfo = true
+            
+        } else if targetContentOffset.pointee.y > childStartPoint.y && scrollView.contentOffset.y > childStartPoint.y {
+            //            scrollView.isScrollEnabled = true
+            editingInfo = nil
+            
+        }
+//        else if targetContentOffset.pointee.y < childStartPoint.y && velocity.y <= 0 {
+//            scrollView.isScrollEnabled = false
+//            editingInfo = false
+//        } 
+        
+//        if velocity.y > 0 {
+//            targetContentOffset.pointee.y = 600
+//
+//        } else if velocity.y < 0 {
+//            targetContentOffset.pointee.y = 2
+//        }
+
+    }
+    
+}
+extension ShowFileViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: AddFormTableViewCell.identifier) as! AddFormTableViewCell
+        return cell
     }
 }

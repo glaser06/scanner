@@ -35,12 +35,16 @@ class ListFilesInteractor: ListFilesBusinessLogic, ListFilesDataStore
     func fetchTags() {
         let tags = self.tagManager.fetchTags()
         let folders = self.tagManager.fetchTopFolders()
-        print(folders)
+        
+        
         self.presenter?.presentTags(response: ListFiles.FetchTags.Response.init(tags: tags, folders: folders ))
     }
     func fetchFiles() {
         let fileManager: FilePageManager = FilePageManager.sharedInstance
-        let files = fileManager.fetchFiles()
+        var files = fileManager.fetchFiles()
+        files = files.filter({ (file) -> Bool in
+            return file.folder == nil
+        })
         self.presenter?.presentFiles(response: files)
     }
     

@@ -12,9 +12,11 @@ import UIKit
 class File {
     var identifier: String = ""
     var name: String
+    var notes: String = ""
     var pages: [Page]
     var date: Date
     var tags: [Tag]
+    var folder: Tag?
     var cacheImage: UIImage?
     
     init() {
@@ -34,6 +36,7 @@ extension File {
         self.name = realmFile.name
         self.identifier = realmFile.identifier
         self.date = realmFile.createdOn
+        self.notes = realmFile.notes
 //        for realmPage in realmFile.pages {
 //            let page = Page(realmPage: realmPage, file: self)
 //            self.pages.append(page)

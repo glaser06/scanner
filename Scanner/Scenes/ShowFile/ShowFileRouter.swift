@@ -15,6 +15,7 @@ import UIKit
 @objc protocol ShowFileRoutingLogic
 {
     //func routeToSomewhere(segue: UIStoryboardSegue?)
+    func routeToShowTags(withFolder: Bool)
 }
 
 protocol ShowFileDataPassing
@@ -28,6 +29,53 @@ class ShowFileRouter: NSObject, ShowFileRoutingLogic, ShowFileDataPassing
     var dataStore: ShowFileDataStore?
     
     // MARK: Routing
+    
+    func routeToShowTags(withFolder: Bool) {
+        
+        
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "ListTags") as! ListTagsViewController
+        
+        
+        
+        var destinationDS = destinationVC.router!.dataStore!
+        if withFolder {
+            passFoldersToShowTags(source: dataStore!, destination: &destinationDS)
+        } else {
+            passTagsToShowTags(source: dataStore!, destination: &destinationDS)
+        }
+        
+        
+        navigateToShowTags(source: viewController!, destination: destinationVC)
+        
+    }
+    func navigateToShowTags(source: ShowFileViewController, destination: ListTagsViewController)
+    {
+        //        source.present
+        //        source.show(destination, sender: nil)
+        destination.modalPresentationStyle = .overCurrentContext
+        destination.modalTransitionStyle = .crossDissolve
+        //        self.viewController!.present(destination, animated: true, completion: nil)
+        source.present(destination, animated: true, completion: nil)
+    }
+    
+    //    MARK: Passing data
+    
+    func passTagsToShowTags(source: ShowFileDataStore, destination: inout ListTagsDataStore)
+    {
+        destination.showingFolders = false
+        destination.tags = TagManager.sharedInstance.fetchTags()
+        destination.file = source.file
+        
+    }
+    func passFoldersToShowTags(source: ShowFileDataStore, destination: inout ListTagsDataStore)
+    {
+        destination.showingFolders = true
+        destination.tags = TagManager.sharedInstance.fetchTopFolders()
+        destination.file = source.file
+        
+    }
     
     //func routeToSomewhere(segue: UIStoryboardSegue?)
     //{

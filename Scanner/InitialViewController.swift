@@ -15,6 +15,9 @@ class InitialViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 //        self.startOver()
+//        TestGenerator.addTags()
+//        TestGenerator.addChildTags()
+        TagManager.sharedInstance.fetchAllFolders()
         
     }
     func startOver() {
@@ -25,6 +28,7 @@ class InitialViewController: UIViewController {
         
         TestGenerator.addTags()
         TestGenerator.addChildTags()
+        
 
     }
     override func viewDidAppear(_ animated: Bool) {

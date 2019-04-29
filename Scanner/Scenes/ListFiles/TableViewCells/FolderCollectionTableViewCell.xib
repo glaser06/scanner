@@ -51,6 +51,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="expandButton" destination="fAh-tc-duP" id="jTf-yf-7OR"/>
                 <outlet property="folderCollectionView" destination="Fe3-yL-coZ" id="y6f-oq-aDm"/>
             </connections>
             <point key="canvasLocation" x="187.19999999999999" y="212.74362818590706"/>

@@ -30,9 +30,17 @@ class ListFilesPresenter: ListFilesPresentationLogic
             
             return ListFiles.TagModel.init(name: t.name, color: UIColor.randomFlat(), count: "3")
         }
-        let folders = response.folders.map { (t) -> ListFiles.TagModel in
-            let colors: [UIColor] = [UIColor.flatRed(), UIColor.flatBlue(), UIColor.flatGray(), UIColor.flatMint(), UIColor.flatTeal() ]
-            return ListFiles.TagModel.init(name: t.name, color: colors.randomElement()!, count: "3")
+        
+        print(TagManager.sharedInstance.filesForTag(tag: response.folders.first!))
+        let folders = response.folders.map { (t) -> ListFiles.FolderModel in
+            let files = TagManager.sharedInstance.filesForTag(tag: t)
+            let images: [UIImage] = files.map({ (file) -> UIImage in
+                return file.cacheImage!
+            })
+//            let colors: [UIColor] = [UIColor.flatRed(), UIColor.flatBlue(), UIColor.flatGray(), UIColor.flatMint(), UIColor.flatTeal() ]
+//            var img = #imageLiteral(resourceName: "files")
+//            var img2 = #imageLiteral(resourceName: "forms")
+            return ListFiles.FolderModel.init(name: t.name, images: images)
         }
         let vm = ListFiles.FetchTags.ViewModel.init(tags: models, folders: folders)
         self.viewController?.displayTags(vm: vm)
@@ -42,6 +50,7 @@ class ListFilesPresenter: ListFilesPresentationLogic
 //        let fileModels = response.files.map { (f) -> ListFiles.FileModel in
 //            ListFiles.FileModel.init(name: f.name, date: DatePresenter.fullDateString(date: f.date), image: f.cacheImage!)
 //        }
+        
         self.viewController?.displayFiles(vm: response)
     }
     

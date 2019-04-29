@@ -70,8 +70,8 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.tagSources = TagCollectionSource()
-        self.folderSources = TagCollectionSource()
+        self.tagSources = TagCollectionSource(cellID: MainTagCollectionViewCell.identifier, emptyData: ListFiles.TagModel.empty())
+        self.folderSources = TagCollectionSource(cellID: FolderCollectionViewCell.identifier, emptyData: ListFiles.FolderModel.empty())
         let cellsToRegister: Array<DisplayableCell.Type> = [
             TagCollectionTableViewCell.self,
             FolderCollectionTableViewCell.self,
@@ -104,6 +104,7 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
         self.interactor?.fetchTags()
     }
     @objc func fetchFiles() {
+        self.interactor?.fetchTags()
         self.interactor?.fetchFiles()
     }
     
@@ -142,7 +143,7 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
     }
     
     func expandFolders() {
-        
+//        https://stackoverflow.com/questions/460014/can-you-animate-a-height-change-on-a-uitableviewcell-when-selected
         if self.folderHeight < 240 {
             self.folderHeight = CGFloat((self.folderSources!.tags.count/3 + 1) * 143 + 52)
             self.allTableView.beginUpdates()
@@ -156,7 +157,25 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
         
     }
     
+    func showTags() {
+        self.router?.routeToShowTags()
+    }
     
+    
+}
+extension ListFilesViewController {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView.contentOffset.y <= 0 {
+//            var percentage = scrollView.contentOffset.y / 50 * -1
+//            
+//            if percentage > 1 {
+//                percentage = 1.0
+//                print(percentage)
+//            }
+//            self.refresherImage.transform = CGAffineTransform(scaleX: 1 + percentage, y: 1 + percentage)
+//        }
+//
+//    }
 }
 
 extension ListFilesViewController: UITableViewDataSource {
@@ -170,7 +189,7 @@ extension ListFilesViewController: UITableViewDataSource {
         switch row {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: TagCollectionTableViewCell.identifier) as! TagCollectionTableViewCell
-            cell.setCell(collectionHandler: self.tagSources!)
+            cell.setCell(collectionHandler: self.tagSources!, routeToShowTags: self.showTags)
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: FolderCollectionTableViewCell.identifier) as! FolderCollectionTableViewCell
@@ -187,6 +206,7 @@ extension ListFilesViewController: UITableViewDataSource {
 }
 extension ListFilesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.router?.routeToShowFile(segue: nil)
         tableView.deselectRow(at: indexPath, animated: false)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -203,5 +223,11 @@ extension ListFilesViewController: UITableViewDelegate {
         }
     }
     
+}
+extension ListFilesViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
+    }
 }
 

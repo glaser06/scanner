@@ -31,6 +31,9 @@
 		E345F5DE225FE48700585793 /* NewPageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E345F5DC225FE48700585793 /* NewPageCollectionViewCell.swift */; };
 		E345F5DF225FE48700585793 /* NewPageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E345F5DD225FE48700585793 /* NewPageCollectionViewCell.xib */; };
 		E34EA887225E757B00CCDE7A /* TagCollectionSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E34EA886225E757B00CCDE7A /* TagCollectionSource.swift */; };
+		E356C3B12266E8BB00616BEA /* AddFormTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E356C3AF2266E8BA00616BEA /* AddFormTableViewCell.swift */; };
+		E356C3B22266E8BB00616BEA /* AddFormTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E356C3B02266E8BA00616BEA /* AddFormTableViewCell.xib */; };
+		E39840742277A7FF00AF66AC /* RealmLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39840732277A7FF00AF66AC /* RealmLocation.swift */; };
 		E39FF304225D176900219FE7 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF302225D176800219FE7 /* UIViewExtension.swift */; };
 		E39FF305225D176900219FE7 /* UITextFieldExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF303225D176800219FE7 /* UITextFieldExtension.swift */; };
 		E39FF30B225D19A900219FE7 /* MainTagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF309225D19A900219FE7 /* MainTagCollectionViewCell.swift */; };
@@ -54,6 +57,12 @@
 		E39FF330225D40C100219FE7 /* RealmNameTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF32F225D40C100219FE7 /* RealmNameTemplate.swift */; };
 		E39FF332225D655F00219FE7 /* FilePageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF331225D655F00219FE7 /* FilePageManager.swift */; };
 		E39FF334225D86C500219FE7 /* TestGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E39FF333225D86C500219FE7 /* TestGenerator.swift */; };
+		E3A855FD2268216F002A05C2 /* ListTagsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A855F72268216E002A05C2 /* ListTagsPresenter.swift */; };
+		E3A855FE2268216F002A05C2 /* ListTagsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A855F82268216E002A05C2 /* ListTagsWorker.swift */; };
+		E3A855FF2268216F002A05C2 /* ListTagsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A855F92268216E002A05C2 /* ListTagsRouter.swift */; };
+		E3A856002268216F002A05C2 /* ListTagsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A855FA2268216E002A05C2 /* ListTagsModels.swift */; };
+		E3A856012268216F002A05C2 /* ListTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A855FB2268216E002A05C2 /* ListTagsViewController.swift */; };
+		E3A856022268216F002A05C2 /* ListTagsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3A855FC2268216E002A05C2 /* ListTagsInteractor.swift */; };
 		E3B5DD22225DA0DE00ECDB4D /* CellDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */; };
 		E3C1EF7422643DDB0035B9BA /* DatePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C1EF7322643DDB0035B9BA /* DatePresenter.swift */; };
 		E3C1EF76226449F70035B9BA /* RealmSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3C1EF75226449F70035B9BA /* RealmSetting.swift */; };
@@ -62,6 +71,11 @@
 		E3DA41DB225C45090044D547 /* Page.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41DA225C45090044D547 /* Page.swift */; };
 		E3DA41DD225C45680044D547 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41DC225C45680044D547 /* Tag.swift */; };
 		E3DA41DF225C462F0044D547 /* StoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DA41DE225C462F0044D547 /* StoreProtocol.swift */; };
+		E3F9033D22690FBB0048D7AB /* LeftAlignCollectionLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F9033C22690FBB0048D7AB /* LeftAlignCollectionLayout.swift */; };
+		E3F90343226912570048D7AB /* ShowTagsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F90341226912570048D7AB /* ShowTagsCollectionViewCell.swift */; };
+		E3F90344226912570048D7AB /* ShowTagsCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3F90342226912570048D7AB /* ShowTagsCollectionViewCell.xib */; };
+		E3FE00242268359200627EAD /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FE00222268359200627EAD /* TagTableViewCell.swift */; };
+		E3FE00252268359200627EAD /* TagTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3FE00232268359200627EAD /* TagTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +107,9 @@
 		E345F5DC225FE48700585793 /* NewPageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E345F5DD225FE48700585793 /* NewPageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewPageCollectionViewCell.xib; sourceTree = "<group>"; };
 		E34EA886225E757B00CCDE7A /* TagCollectionSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionSource.swift; sourceTree = "<group>"; };
+		E356C3AF2266E8BA00616BEA /* AddFormTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFormTableViewCell.swift; sourceTree = "<group>"; };
+		E356C3B02266E8BA00616BEA /* AddFormTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddFormTableViewCell.xib; sourceTree = "<group>"; };
+		E39840732277A7FF00AF66AC /* RealmLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmLocation.swift; sourceTree = "<group>"; };
 		E39FF302225D176800219FE7 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		E39FF303225D176800219FE7 /* UITextFieldExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextFieldExtension.swift; sourceTree = "<group>"; };
 		E39FF309225D19A900219FE7 /* MainTagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -116,6 +133,12 @@
 		E39FF32F225D40C100219FE7 /* RealmNameTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmNameTemplate.swift; sourceTree = "<group>"; };
 		E39FF331225D655F00219FE7 /* FilePageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePageManager.swift; sourceTree = "<group>"; };
 		E39FF333225D86C500219FE7 /* TestGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGenerator.swift; sourceTree = "<group>"; };
+		E3A855F72268216E002A05C2 /* ListTagsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTagsPresenter.swift; sourceTree = "<group>"; };
+		E3A855F82268216E002A05C2 /* ListTagsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTagsWorker.swift; sourceTree = "<group>"; };
+		E3A855F92268216E002A05C2 /* ListTagsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTagsRouter.swift; sourceTree = "<group>"; };
+		E3A855FA2268216E002A05C2 /* ListTagsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTagsModels.swift; sourceTree = "<group>"; };
+		E3A855FB2268216E002A05C2 /* ListTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTagsViewController.swift; sourceTree = "<group>"; };
+		E3A855FC2268216E002A05C2 /* ListTagsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTagsInteractor.swift; sourceTree = "<group>"; };
 		E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDataProtocol.swift; sourceTree = "<group>"; };
 		E3C1EF7322643DDB0035B9BA /* DatePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePresenter.swift; sourceTree = "<group>"; };
 		E3C1EF75226449F70035B9BA /* RealmSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmSetting.swift; sourceTree = "<group>"; };
@@ -124,6 +147,11 @@
 		E3DA41DA225C45090044D547 /* Page.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Page.swift; sourceTree = "<group>"; };
 		E3DA41DC225C45680044D547 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		E3DA41DE225C462F0044D547 /* StoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreProtocol.swift; sourceTree = "<group>"; };
+		E3F9033C22690FBB0048D7AB /* LeftAlignCollectionLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignCollectionLayout.swift; sourceTree = "<group>"; };
+		E3F90341226912570048D7AB /* ShowTagsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowTagsCollectionViewCell.swift; sourceTree = "<group>"; };
+		E3F90342226912570048D7AB /* ShowTagsCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShowTagsCollectionViewCell.xib; sourceTree = "<group>"; };
+		E3FE00222268359200627EAD /* TagTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
+		E3FE00232268359200627EAD /* TagTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TagTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -246,6 +274,7 @@
 		E31C1C00225BFE5C00A124BE /* ShowFile */ = {
 			isa = PBXGroup;
 			children = (
+				E356C3AE2266E61400616BEA /* TableViewCells */,
 				E345F5D7225FB8F000585793 /* CollectionViewCells */,
 				E345F5CF225FADDF00585793 /* ShowFileViewController.swift */,
 				E345F5D0225FADDF00585793 /* ShowFileInteractor.swift */,
@@ -293,6 +322,7 @@
 				E39FF32D225D40BA00219FE7 /* RealmTag.swift */,
 				E39FF32F225D40C100219FE7 /* RealmNameTemplate.swift */,
 				E3C1EF75226449F70035B9BA /* RealmSetting.swift */,
+				E39840732277A7FF00AF66AC /* RealmLocation.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -308,6 +338,13 @@
 		E31C1C07225C0FC800A124BE /* ListTags */ = {
 			isa = PBXGroup;
 			children = (
+				E3FE00212268358300627EAD /* TableviewCells */,
+				E3A855FB2268216E002A05C2 /* ListTagsViewController.swift */,
+				E3A855FC2268216E002A05C2 /* ListTagsInteractor.swift */,
+				E3A855F72268216E002A05C2 /* ListTagsPresenter.swift */,
+				E3A855F82268216E002A05C2 /* ListTagsWorker.swift */,
+				E3A855F92268216E002A05C2 /* ListTagsRouter.swift */,
+				E3A855FA2268216E002A05C2 /* ListTagsModels.swift */,
 			);
 			path = ListTags;
 			sourceTree = "<group>";
@@ -315,12 +352,23 @@
 		E345F5D7225FB8F000585793 /* CollectionViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				E3F90341226912570048D7AB /* ShowTagsCollectionViewCell.swift */,
+				E3F90342226912570048D7AB /* ShowTagsCollectionViewCell.xib */,
 				E345F5D8225FB91E00585793 /* PageImageCollectionViewCell.swift */,
 				E345F5D9225FB91E00585793 /* PageImageCollectionViewCell.xib */,
 				E345F5DC225FE48700585793 /* NewPageCollectionViewCell.swift */,
 				E345F5DD225FE48700585793 /* NewPageCollectionViewCell.xib */,
 			);
 			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		E356C3AE2266E61400616BEA /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				E356C3AF2266E8BA00616BEA /* AddFormTableViewCell.swift */,
+				E356C3B02266E8BA00616BEA /* AddFormTableViewCell.xib */,
+			);
+			path = TableViewCells;
 			sourceTree = "<group>";
 		};
 		E39FF306225D176C00219FE7 /* Utilities */ = {
@@ -330,6 +378,7 @@
 				E39FF303225D176800219FE7 /* UITextFieldExtension.swift */,
 				E3B5DD21225DA0DE00ECDB4D /* CellDataProtocol.swift */,
 				E3C1EF7322643DDB0035B9BA /* DatePresenter.swift */,
+				E3F9033C22690FBB0048D7AB /* LeftAlignCollectionLayout.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -361,6 +410,15 @@
 				E39FF30E225D19B400219FE7 /* FolderCollectionViewCell.xib */,
 			);
 			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
+		E3FE00212268358300627EAD /* TableviewCells */ = {
+			isa = PBXGroup;
+			children = (
+				E3FE00222268359200627EAD /* TagTableViewCell.swift */,
+				E3FE00232268359200627EAD /* TagTableViewCell.xib */,
+			);
+			path = TableviewCells;
 			sourceTree = "<group>";
 		};
 		F1A377356AD59C4E6700B929 /* Frameworks */ = {
@@ -441,7 +499,10 @@
 				E39FF322225D1C0900219FE7 /* FilterConditionsTableViewCell.xib in Resources */,
 				E345F5DF225FE48700585793 /* NewPageCollectionViewCell.xib in Resources */,
 				E39FF326225D258F00219FE7 /* FormTableViewCell.xib in Resources */,
+				E356C3B22266E8BB00616BEA /* AddFormTableViewCell.xib in Resources */,
+				E3F90344226912570048D7AB /* ShowTagsCollectionViewCell.xib in Resources */,
 				E39FF30C225D19A900219FE7 /* MainTagCollectionViewCell.xib in Resources */,
+				E3FE00252268359200627EAD /* TagTableViewCell.xib in Resources */,
 				E31C1BE3225BFD8D00A124BE /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -513,17 +574,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				E39FF32E225D40BA00219FE7 /* RealmTag.swift in Sources */,
+				E3A855FD2268216F002A05C2 /* ListTagsPresenter.swift in Sources */,
 				E3B5DD22225DA0DE00ECDB4D /* CellDataProtocol.swift in Sources */,
+				E39840742277A7FF00AF66AC /* RealmLocation.swift in Sources */,
 				E345F5D6225FADDF00585793 /* ShowFileInteractor.swift in Sources */,
+				E3A855FE2268216F002A05C2 /* ListTagsWorker.swift in Sources */,
 				E34EA887225E757B00CCDE7A /* TagCollectionSource.swift in Sources */,
+				E3FE00242268359200627EAD /* TagTableViewCell.swift in Sources */,
 				E39FF32A225D40AB00219FE7 /* RealmPage.swift in Sources */,
+				E3A855FF2268216F002A05C2 /* ListTagsRouter.swift in Sources */,
 				E3DA41DD225C45680044D547 /* Tag.swift in Sources */,
 				E31C1BF9225BFE0C00A124BE /* ListFilesPresenter.swift in Sources */,
+				E3A856022268216F002A05C2 /* ListTagsInteractor.swift in Sources */,
+				E3F90343226912570048D7AB /* ShowTagsCollectionViewCell.swift in Sources */,
 				E39FF32C225D40B500219FE7 /* RealmFile.swift in Sources */,
 				E39FF30B225D19A900219FE7 /* MainTagCollectionViewCell.swift in Sources */,
 				E345F5DE225FE48700585793 /* NewPageCollectionViewCell.swift in Sources */,
 				E31C1BFC225BFE0C00A124BE /* ListFilesModels.swift in Sources */,
 				E345F5D3225FADDF00585793 /* ShowFileRouter.swift in Sources */,
+				E356C3B12266E8BB00616BEA /* AddFormTableViewCell.swift in Sources */,
 				E39FF313225D19CA00219FE7 /* TagCollectionTableViewCell.swift in Sources */,
 				E3D288722262640300DB2D30 /* FileWorker.swift in Sources */,
 				E31C1BFD225BFE0C00A124BE /* ListFilesViewController.swift in Sources */,
@@ -541,13 +610,16 @@
 				E3DA41DB225C45090044D547 /* Page.swift in Sources */,
 				E39FF334225D86C500219FE7 /* TestGenerator.swift in Sources */,
 				E31C1C09225C444600A124BE /* Form.swift in Sources */,
+				E3A856012268216F002A05C2 /* ListTagsViewController.swift in Sources */,
 				E39FF305225D176900219FE7 /* UITextFieldExtension.swift in Sources */,
+				E3F9033D22690FBB0048D7AB /* LeftAlignCollectionLayout.swift in Sources */,
 				E31C1BDE225BFD8D00A124BE /* AppDelegate.swift in Sources */,
 				E39FF325225D258F00219FE7 /* FormTableViewCell.swift in Sources */,
 				E3C1EF76226449F70035B9BA /* RealmSetting.swift in Sources */,
 				E39FF332225D655F00219FE7 /* FilePageManager.swift in Sources */,
 				E39FF330225D40C100219FE7 /* RealmNameTemplate.swift in Sources */,
 				E31C1BFE225BFE0C00A124BE /* ListFilesInteractor.swift in Sources */,
+				E3A856002268216F002A05C2 /* ListTagsModels.swift in Sources */,
 				E31C1BFB225BFE0C00A124BE /* ListFilesRouter.swift in Sources */,
 				E3DA41DF225C462F0044D547 /* StoreProtocol.swift in Sources */,
 				E39FF31B225D19E500219FE7 /* FileTableViewCell.swift in Sources */,

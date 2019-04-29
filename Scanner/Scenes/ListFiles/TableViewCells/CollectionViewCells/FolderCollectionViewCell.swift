@@ -8,19 +8,46 @@
 
 import UIKit
 
-class FolderCollectionViewCell: UICollectionViewCell, DisplayableCell {
+class FolderCollectionViewCell: DefaultDisplayableCell {
     
-    static let identifier: String = "FolderCell"
-    static let nibName: String = "FolderCollectionViewCell"
+    
+    override class var identifier: String {
+        return "FolderCell"
+    }
+    override class var nibName: String {
+        return "FolderCollectionViewCell"
+    }
+//    static let identifier: String = "FolderCell"
+//    static let nibName: String = "FolderCollectionViewCell"
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
     @IBOutlet weak var nameLabel: UILabel!
-    func setCell(name: String) {
-        
-        self.nameLabel.text = name
+    @IBOutlet weak var image1: UIImageView!
+    @IBOutlet weak var image2: UIImageView!
+    @IBOutlet weak var image3: UIImageView!
+    @IBOutlet weak var image4: UIImageView!
+    
+    override func setCell(model: ItemModel) {
+        if let folder = model as? ListFiles.FolderModel {
+            self.setCell(folderModel: folder)
+        }
+    }
+    
+    func setCell(folderModel: ListFiles.FolderModel) {
+        let imageArray = [image1, image2, image3, image4]
+        for (i, img) in imageArray.enumerated() {
+            imageArray[i]?.image = UIImage()
+        }
+        self.nameLabel.text = folderModel.name
+        for (i, item) in folderModel.images.enumerated() {
+            if i == imageArray.count {
+                break 
+            }
+            imageArray[i]?.image = item
+        }
         
         self.isHeightCalculated = false
         self.setNeedsLayout()

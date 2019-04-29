@@ -20,12 +20,17 @@ class FilePageManager {
     init() {
         self.realm = try! Realm()
         realmFiles = realm.objects(RealmFile.self)
+        
         for realmFile in self.realmFiles! {
             if let _ = fileCache[realmFile.identifier] {
                 
             } else {
                 
-                let file = realmFile.file
+                var file = realmFile.file
+                if let fileWithTags = FileWorker().fetchTagsFor(file: file) {
+                    file = fileWithTags
+                }
+//                print(file.tags)
                 fileCache[realmFile.identifier] = " "
                 fileArray.append(file)
                 
@@ -36,9 +41,15 @@ class FilePageManager {
     var fileCache: [String: String] = [:]
     var fileArray: [File] = []
     
+    
+    
     func addToCache(id: String) {
-        let file = realm.object(ofType: RealmFile.self, forPrimaryKey: id)
-        self.fileArray.append(file!.file)
+        let realmFile = realm.object(ofType: RealmFile.self, forPrimaryKey: id)
+        var file = realmFile?.file
+        if let fileWithTags = FileWorker().fetchTagsFor(file: file!) {
+            file = fileWithTags
+        }
+        self.fileArray.append(file!)
         self.fileCache[id] = " "
     }
     
@@ -51,7 +62,7 @@ class FilePageManager {
     
     func realmPageFor(page: Page, parentFile: RealmFile) -> RealmPage {
         let realmPage = RealmPage()
-        realmPage.file = parentFile
+        
         realmPage.pageName = page.pageName
         realmPage.pageNumber = page.pageNumber
         realmPage.path = try! self.saveImage(name: page.pageName, img: page.image!)
@@ -110,6 +121,10 @@ class FilePageManager {
         return path
     }
     
+    func updatePagesFor(realmFile: RealmFile, updatedFile: File) -> RealmFile {
+        return realmFile
+    }
+    
     
 }
 extension FilePageManager: DataStore {
@@ -122,14 +137,22 @@ extension FilePageManager: DataStore {
             return
         }
         let results = realm.object(ofType: RealmFile.self, forPrimaryKey: file.identifier)
-        if let realmFile = results {
+        if var realmFile = results {
 //            file exists, update
+            realmFile.name = file.name
+            realmFile.notes = file.notes
+            realmFile.createdOn = file.date
+            realmFile = updatePagesFor(realmFile: realmFile, updatedFile: file)
+            
+            
         } else {
             let realmFile = RealmFile()
             if file.identifier != "" {
                 realmFile.identifier = file.identifier
             }
             realmFile.name = file.name
+            realmFile.notes = file.notes
+            realmFile.createdOn = file.date
             realmFile.cacheImageName = "\(realmFile.identifier)cacheImage"
             let firstPage = file.pages.first!
             realmFile.cacheImagePath = self.saveResizedImage(name: realmFile.cacheImageName, image: firstPage.image!)
@@ -138,12 +161,22 @@ extension FilePageManager: DataStore {
                 let realmPage = self.realmPageFor(page: page, parentFile: realmFile)
                 realmPages.append(realmPage)
             }
+            var realmTags: [RealmTag] = []
+            for tag in file.tags {
+                let realmTag = TagManager.sharedInstance.realmTagFor(tag: tag)
+                realmTags.append(realmTag!)
+            }
             try! realm.write {
                 realm.add(realmFile)
                 realm.add(realmPages)
+                realm.add(realmTags, update: true)
                 realmFile.pages.append(objectsIn: realmPages)
+                realmFile.tags.append(objectsIn: realmTags)
             }
-            file.pages = []
+//            print(realmFile.tags.count)
+//            let rf = realm.object(ofType: RealmFile.self, forPrimaryKey: realmFile.identifier)
+//            print(rf?.tags)
+//            file.pages = []
             self.addToCache(id: file.identifier)
         }
         

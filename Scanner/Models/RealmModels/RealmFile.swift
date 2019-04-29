@@ -14,6 +14,8 @@ class RealmFile: Object {
     @objc dynamic var identifier: String = UUID().uuidString
     @objc dynamic var name: String = ""
     @objc dynamic var createdOn: Date = Date()
+    @objc dynamic var lastUpdated: Date = Date()
+    @objc dynamic var notes: String = ""
     
     @objc dynamic var cacheImageName: String = ""
     @objc dynamic var cacheImagePath: String = ""

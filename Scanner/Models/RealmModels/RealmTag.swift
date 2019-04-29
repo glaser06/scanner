@@ -15,6 +15,7 @@ class RealmTag: Object {
     @objc dynamic var name: String = ""
     @objc dynamic var colorID: Int = 0 
     var tags = List<RealmTag>()
+    let files = LinkingObjects(fromType: RealmFile.self, property: "tags")
     
     override static func primaryKey() -> String {
         return "identifier"

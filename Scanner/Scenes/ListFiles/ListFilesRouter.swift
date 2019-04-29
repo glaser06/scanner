@@ -15,6 +15,7 @@ import UIKit
 @objc protocol ListFilesRoutingLogic
 {
     func routeToShowFile(segue: UIStoryboardSegue?)
+    func routeToShowTags()
 }
 
 protocol ListFilesDataPassing
@@ -46,15 +47,69 @@ class ListFilesRouter: NSObject, ListFilesRoutingLogic, ListFilesDataPassing
     func navigateToShowFile(source: ListFilesViewController, destination: ShowFileViewController)
     {
 //        source.present
-        source.show(destination, sender: nil)
+//        source.show(destination, sender: nil)
+        if let indexPath = viewController?.allTableView.indexPathForSelectedRow {
+            if indexPath.row >= 2 {
+                source.present(destination, animated: true, completion: nil)
+            }
+            
+        } else {
+            source.present(destination, animated: true, completion: nil)
+        }
+        
     }
     
 //    MARK: Passing data
     
     func passDataToShowFile(source: ListFilesDataStore, destination: inout ShowFileDataStore)
     {
-        destination.file = nil
+        
+        if let indexPath = viewController?.allTableView.indexPathForSelectedRow {
+            if indexPath.row >= 2 {
+                destination.file = viewController?.files[indexPath.row - 2]
+            }
+            
+        } else {
+            
+            destination.file = nil
+        }
     }
+    func routeToShowTags() {
+        
+        
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "ListTags") as! ListTagsViewController
+
+        
+        
+        var destinationDS = destinationVC.router!.dataStore!
+        passDataToShowTags(source: dataStore!, destination: &destinationDS)
+        navigateToShowTags(source: viewController!, destination: destinationVC)
+        
+    }
+    func navigateToShowTags(source: ListFilesViewController, destination: ListTagsViewController)
+    {
+        //        source.present
+        //        source.show(destination, sender: nil)
+        destination.modalPresentationStyle = .overCurrentContext
+        destination.modalTransitionStyle = .crossDissolve
+//        self.viewController!.present(destination, animated: true, completion: nil)
+        source.present(destination, animated: true, completion: nil)
+    }
+    
+    //    MARK: Passing data
+    
+    func passDataToShowTags(source: ListFilesDataStore, destination: inout ListTagsDataStore)
+    {
+        destination.tags = TagManager.sharedInstance.fetchTags()
+//        if let indexPath = viewController?.allTableView.indexPathForSelectedRow {
+//            destination.file = viewController?.files[indexPath.row - 2]
+//        } else {
+//            destination.file = nil
+//        }
+    }
+    
     
     
     //func routeToSomewhere(segue: UIStoryboardSegue?)

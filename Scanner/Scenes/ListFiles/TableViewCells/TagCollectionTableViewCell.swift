@@ -27,12 +27,20 @@ class TagCollectionTableViewCell: UITableViewCell, DisplayableCell {
     
     @IBOutlet weak var tagCollectionView: UICollectionView!
     
-    func setCell(collectionHandler: UICollectionViewDataSource & UICollectionViewDelegate) {
+    @IBAction func routeToShowTags() {
+        self.showTags()
+    }
+    
+    var showTags: (() -> Void)!
+    
+    func setCell(collectionHandler: UICollectionViewDataSource & UICollectionViewDelegate, routeToShowTags: @escaping (() -> Void)) {
         self.tagCollectionView.tag = 1
         self.tagCollectionView.delegate = collectionHandler
         self.tagCollectionView.dataSource = collectionHandler
         self.tagCollectionView.reloadData()
+        self.showTags = routeToShowTags
     }
+    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
