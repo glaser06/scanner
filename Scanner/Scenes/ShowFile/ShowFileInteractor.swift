@@ -15,6 +15,7 @@ import UIKit
 protocol ShowFileBusinessLogic
 {
     func saveFile(request: ShowFile.SaveFile.Request)
+    func saveState(request: ShowFile.SaveFile.Request)
     func fetchFile()
 }
 
@@ -37,10 +38,13 @@ class ShowFileInteractor: ShowFileBusinessLogic, ShowFileDataStore
     func fetchFile() {
         if let f = self.file {
             let fileWorker = FileWorker()
-            print(f.tags)
-            if let fileWithPages = fileWorker.fetchPagesFor(file: f) {
-                self.file = fileWithPages
+            if f.pages.isEmpty {
+                if let fileWithPages = fileWorker.fetchPagesFor(file: f) {
+                    self.file = fileWithPages
+                }
             }
+            print(f.tags)
+            
             
             self.presenter?.presentFile(response: ShowFile.FetchFile.Response.init(file: self.file!))
         } else {
@@ -49,16 +53,60 @@ class ShowFileInteractor: ShowFileBusinessLogic, ShowFileDataStore
             self.presenter?.presentNewFile(response: ShowFile.FetchFile.Response.init(file: file!))
         }
     }
-    func saveFile(request: ShowFile.SaveFile.Request) {
-        let images = request.pageImages
+    func saveState(request: ShowFile.SaveFile.Request) {
+        let images = request.file.pageImages
         self.file!.name = request.file.name
         self.file!.notes = request.file.notes
         
         
         let fileWorker = FileWorker()
-        self.file = fileWorker.addPagesTo(file: self.file!, pageImages: images)
-        print(self.file?.tags)
-        self.file?.write(dataStore: fpManager)
+        if self.isNewFile {
+            self.file = fileWorker.addNewPagesTo(file: self.file!, pageImages: images )
+            print(self.file?.tags)
+            
+        } else {
+            var newPages: [Page] = []
+            for (i, pageImage) in images.enumerated() {
+                if i >= self.file!.pages.count {
+                    let page = Page(file: self.file!)
+                    page.image = pageImage
+                    page.pageNumber = i
+                    page.pageName = "\(self.file!.identifier)page\(page.pageNumber)"
+                    newPages.append(page)
+                }
+            }
+            self.file?.pages.append(contentsOf: newPages)
+            
+        }
+        
+        
+    }
+    func saveFile(request: ShowFile.SaveFile.Request) {
+        let images = request.file.pageImages
+        self.file!.name = request.file.name
+        self.file!.notes = request.file.notes
+        
+        
+        let fileWorker = FileWorker()
+        if self.isNewFile {
+            self.file = fileWorker.addNewPagesTo(file: self.file!, pageImages: images )
+            print(self.file?.tags)
+            self.file?.write(dataStore: fpManager)
+        } else {
+            var newPages: [Page] = []
+            for (i, pageImage) in images.enumerated() {
+                if i >= self.file!.pages.count {
+                    let page = Page(file: self.file!)
+                    page.image = pageImage
+                    page.pageNumber = i
+                    page.pageName = "\(self.file!.identifier)page\(page.pageNumber)"
+                    newPages.append(page)
+                }
+            }
+            self.file?.pages.append(contentsOf: newPages)
+            self.file?.write(dataStore: fpManager)
+        }
+        
         self.file = nil
         self.presenter?.dismiss()
         

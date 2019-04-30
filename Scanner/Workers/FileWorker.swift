@@ -33,8 +33,10 @@ class FileWorker {
         if let realmFile = realm.object(ofType: RealmFile.self, forPrimaryKey: file.identifier) {
             var pages: [Page] = []
             for realmPage in realmFile.pages {
+                print(realmPage.identifier)
                 let page = Page(realmPage: realmPage, file: file)
                 pages.append(page)
+                print(page.identifier)
             }
             file.pages = pages
             return file
@@ -86,17 +88,19 @@ class FileWorker {
 //        return files.map({ $0.pages.first!.image! })
 //    }
     
-    func addPagesTo(file: File, pageImages: [UIImage]) -> File {
+    func addNewPagesTo(file: File, pageImages: [UIImage]) -> File {
         var pages: [Page] = []
-        for img in pageImages {
+        for (i,img) in pageImages.enumerated() {
             let page = Page(file: file)
             page.image = img
+            page.pageNumber = i
             page.pageName = "\(file.identifier)page\(page.pageNumber)"
             pages.append(page)
         }
         file.pages = pages
         return file
     }
+    
     
     func saveFile(file: File) {
         

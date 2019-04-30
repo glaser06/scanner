@@ -192,6 +192,11 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         self.refresher?.endRefreshing()
     }
     @objc func showTagSelection() {
+        let images: [UIImage] = self.scannerResults
+        self.viewModel?.pageImages = images
+        
+        self.interactor?.saveState(request: ShowFile.SaveFile.Request.init(file: self.viewModel!, pageImages: images) )
+        
         self.router?.routeToShowTags(withFolder: false)
     }
     
@@ -206,7 +211,7 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
     var editingInfo: Bool? = false
     
     var scanners: [ImageScannerController] = []
-    var scannerResults : [ImageScannerResults] = []
+    var scannerResults : [UIImage] = []
     
     //@IBOutlet weak var nameTextField: UITextField!
     
@@ -259,8 +264,11 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
     
     
     
-    @IBAction func save () {
-        let images: [UIImage] = self.scannerResults.map({ $0.doesUserPreferEnhancedImage ? $0.enhancedImage! : $0.scannedImage })
+    @IBAction func save() {
+        
+        let images: [UIImage] = self.scannerResults
+        self.viewModel?.pageImages = images
+        
         self.interactor?.saveFile(request: ShowFile.SaveFile.Request.init(file: self.viewModel!, pageImages: images) )
     }
     
@@ -287,6 +295,7 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         
     }
     func setFileInfo(new: Bool) {
+        
         guard let vm = self.viewModel else {
             return
         }
@@ -299,6 +308,9 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
             self.dateLabel.text = vm.date
             self.notesTextView.text = vm.notes
             self.folderButton.setTitle(vm.folder, for: .normal)
+            if !vm.pageImages.isEmpty {
+                self.scannerResults = vm.pageImages
+            }
             if vm.tags.count > 0 {
                 self.tagSource.tags = vm.tags
                 self.tagCollection.reloadData()
@@ -351,11 +363,7 @@ extension ShowFileViewController: UICollectionViewDataSource {
             return 1
         }
         
-        if vm.pageImages.count == 0 {
-            return self.scanners.count + 1
-        } else {
-            return vm.pageImages.count + 1
-        }
+        return self.scannerResults.count + 1
         
     }
     
@@ -367,36 +375,38 @@ extension ShowFileViewController: UICollectionViewDataSource {
             
             return cell
         }
-        if vm.pageImages.count == 0 {
-            guard indexPath.row < self.scanners.count else {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
-                cell.setCell()
-                
-                return cell
-                
-            }
+        
+        guard indexPath.row < self.scannerResults.count else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
+            cell.setCell()
             
-            let result = self.scannerResults[index]
-            var image = result.scannedImage
-            if result.doesUserPreferEnhancedImage {
-                image = result.enhancedImage!
-            }
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageImageCollectionViewCell.identifier, for: indexPath) as! PageImageCollectionViewCell
-            cell.setCell(image: image)
             return cell
-        } else {
-            guard indexPath.row < vm.pageImages.count else {
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
-                cell.setCell()
-                
-                return cell
-                
-            }
-            let image = vm.pageImages[index]
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageImageCollectionViewCell.identifier, for: indexPath) as! PageImageCollectionViewCell
-            cell.setCell(image: image)
-            return cell
+            
         }
+        
+        let result = self.scannerResults[index]
+//            var image = result.scannedImage
+//            if result.doesUserPreferEnhancedImage {
+//                image = result.enhancedImage!
+//            }
+        let image = result
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageImageCollectionViewCell.identifier, for: indexPath) as! PageImageCollectionViewCell
+        cell.setCell(image: image)
+        return cell
+        
+//        else {
+//            guard indexPath.row < vm.pageImages.count else {
+//                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewPageCollectionViewCell.identifier, for: indexPath) as! NewPageCollectionViewCell
+//                cell.setCell()
+//                
+//                return cell
+//
+//            }
+//            let image = vm.pageImages[index]
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PageImageCollectionViewCell.identifier, for: indexPath) as! PageImageCollectionViewCell
+//            cell.setCell(image: image)
+//            return cell
+//        }
         
         
     }
@@ -408,16 +418,14 @@ extension ShowFileViewController: UICollectionViewDelegate {
         guard let vm = self.viewModel else {
             return
         }
-        guard vm.pageImages.count == 0 else {
-            return
-        }
-        guard index < self.scanners.count else {
+        
+        guard index < self.scannerResults.count else {
             self.addNewPage()
             return
         }
         
-        let scanner = self.scanners[index]
-        self.presentScanner(scanner: scanner, animated: true)
+//        let scanner = self.scanners[index]
+//        self.presentScanner(scanner: scanner, animated: true)
     }
 }
 
@@ -449,11 +457,21 @@ extension ShowFileViewController: ImageScannerControllerDelegate {
         for (index, sc) in self.scanners.enumerated() {
             if scanner == sc {
                 existingScanner = true
-                self.scannerResults[index] = results
+                if results.doesUserPreferEnhancedImage {
+                    self.scannerResults[index] = results.enhancedImage!
+                } else {
+                    self.scannerResults[index] = results.scannedImage
+                }
+                
             }
         }
         if !existingScanner {
-            self.scannerResults.append(results)
+            if results.doesUserPreferEnhancedImage {
+                self.scannerResults.append(results.enhancedImage!)
+            } else {
+                self.scannerResults.append(results.scannedImage)
+            }
+//            self.scannerResults.append(results)
             self.scanners.append(scanner)
         }
         self.pageCollectionView.reloadData()

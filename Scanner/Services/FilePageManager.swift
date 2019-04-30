@@ -60,7 +60,7 @@ class FilePageManager {
         return self.fileArray
     }
     
-    func realmPageFor(page: Page, parentFile: RealmFile) -> RealmPage {
+    func realmPageFor(page: Page) -> RealmPage {
         let realmPage = RealmPage()
         
         realmPage.pageName = page.pageName
@@ -121,8 +121,24 @@ class FilePageManager {
         return path
     }
     
-    func updatePagesFor(realmFile: RealmFile, updatedFile: File) -> RealmFile {
-        return realmFile
+    func updatePagesFor(realmFile: RealmFile, updatedFile: File) -> [RealmPage] {
+        var newRealmPages: [RealmPage] = []
+        var realmPageIndex: [String: RealmPage] = [:]
+        for page in realmFile.pages {
+            realmPageIndex[page.identifier] = page
+            print(page.identifier)
+        }
+        for page in updatedFile.pages {
+            print(page.identifier)
+            if realmPageIndex[page.identifier] != nil {
+                newRealmPages.append(realmPageIndex[page.identifier]!)
+            } else {
+                let p = realmPageFor(page: page)
+                newRealmPages.append(p)
+            }
+        }
+        
+        return newRealmPages
     }
     
     
@@ -137,13 +153,29 @@ extension FilePageManager: DataStore {
             return
         }
         let results = realm.object(ofType: RealmFile.self, forPrimaryKey: file.identifier)
-        if var realmFile = results {
+        if let realmFile = results {
 //            file exists, update
-            realmFile.name = file.name
-            realmFile.notes = file.notes
-            realmFile.createdOn = file.date
-            realmFile = updatePagesFor(realmFile: realmFile, updatedFile: file)
             
+            let newPages = updatePagesFor(realmFile: realmFile, updatedFile: file)
+            var realmTags: [RealmTag] = []
+            for tag in file.tags {
+                let realmTag = TagManager.sharedInstance.realmTagFor(tag: tag)
+                print(tag)
+                realmTags.append(realmTag!)
+            }
+            try! realm.write {
+                realmFile.name = file.name
+                realmFile.notes = file.notes
+                realmFile.createdOn = file.date
+                
+                realm.add(newPages, update: true)
+                realm.add(realmTags, update: true)
+                realmFile.pages.removeAll()
+                realmFile.pages.append(objectsIn: newPages)
+                realmFile.tags.removeAll()
+                realmFile.tags.append(objectsIn: realmTags)
+                realm.add(realmFile, update: true)
+            }
             
         } else {
             let realmFile = RealmFile()
@@ -158,7 +190,7 @@ extension FilePageManager: DataStore {
             realmFile.cacheImagePath = self.saveResizedImage(name: realmFile.cacheImageName, image: firstPage.image!)
             var realmPages: [RealmPage] = []
             for page in file.pages {
-                let realmPage = self.realmPageFor(page: page, parentFile: realmFile)
+                let realmPage = self.realmPageFor(page: page)
                 realmPages.append(realmPage)
             }
             var realmTags: [RealmTag] = []
