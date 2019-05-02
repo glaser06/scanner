@@ -26,7 +26,7 @@ class ListTagsPresenter: ListTagsPresentationLogic
     
     func presentTags(response: ListTags.FetchTags.Response) {
         let tagModels = response.tags.map { (tag) -> ListTags.TagModel in
-            return ListTags.TagModel.init(name: tag.0.name, color: UIColor.randomFlat(), selected: tag.1, depth: 0)
+            return ListTags.TagModel.init(name: tag.0.name, color: UIColor.randomFlat(), selected: tag.1, depth: tag.0.depth)
         }
         self.viewController?.displayTags(vm: ListTags.FetchTags.ViewModel.init(tags: tagModels, showingFolders: response.showingFolders))
     }

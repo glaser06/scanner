@@ -72,6 +72,7 @@ class ListTagsViewController: UIViewController, ListTagsDisplayLogic
     {
         super.viewDidLoad()
         self.setupTableView(tableView: self.tagTableView, cellsToRegister: [TagTableViewCell.self], estimatedHeight: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchTags), name: .tagDataChanged, object: nil)
         self.fetchTags()
     }
     func setupTableView(tableView: UITableView, cellsToRegister: Array<DisplayableCell.Type>, estimatedHeight: CGFloat?) {
@@ -90,9 +91,13 @@ class ListTagsViewController: UIViewController, ListTagsDisplayLogic
     var tags: [ListTags.TagModel] = []
     var showingFolders: Bool = false
     
+    var isManaging: Bool = false
+    var disableTouchToDismiss = false
+    
     
     @IBOutlet weak var tagTableView: UITableView!
     @IBOutlet weak var alertView: UIView!
+    @IBOutlet weak var addTagButton: UIButton!
     
     @IBAction func clearSelection() {
         for (i, _) in self.tags.enumerated() {
@@ -103,8 +108,28 @@ class ListTagsViewController: UIViewController, ListTagsDisplayLogic
     @IBAction func done() {
         self.selectTags()
     }
+    @IBAction func manageTags() {
+        if isManaging {
+            self.addTagButton.setTitle("New Tag", for: .normal)
+            self.addTagButton.backgroundColor = UIColor.flatGray()
+            self.isManaging = false
+        } else {
+            self.addTagButton.setTitle("Delete Tags", for: .normal)
+            self.addTagButton.backgroundColor = UIColor.flatRed()
+            self.isManaging = true
+        }
+        
+    }
+    @IBAction func actOnSelection() {
+        if isManaging {
+            self.interactor?.deleteTags(request: ListTags.SelectTags.Request.init(selectedTags: self.tags))
+        } else {
+            self.disableTouchToDismiss = true
+            self.router?.routeToAddTag()
+        }
+    }
     
-    func fetchTags() {
+    @objc func fetchTags() {
         self.interactor?.fetchTags()
     }
     
@@ -122,13 +147,16 @@ class ListTagsViewController: UIViewController, ListTagsDisplayLogic
 }
 extension ListTagsViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        var touch: UITouch? = touches.first
-        //location is relative to the current view
-        // do something with the touched point
-        if touch?.view != self.alertView {
-            self.selectTags()
-            
+        if !disableTouchToDismiss {
+            var touch: UITouch? = touches.first
+            //location is relative to the current view
+            // do something with the touched point
+            if touch?.view != self.alertView {
+                self.selectTags()
+                
+            }
         }
+        
     }
 }
 

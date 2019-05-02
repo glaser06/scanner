@@ -22,10 +22,15 @@ class TagTableViewCell: UITableViewCell, DisplayableCell {
     @IBOutlet weak var colorView: UIView!
     @IBOutlet weak var checkmark: UIImageView!
     
+    @IBOutlet weak var depthDistanceContraint: NSLayoutConstraint!
+    
     func setCell(name: String, color: UIColor, depth: Int, selected: Bool) {
         self.nameLabel.text = name
         self.colorView.backgroundColor = color
         self.checkmark.isHidden = !selected
+        
+        self.depthDistanceContraint.constant = CGFloat(16 + 26 * depth)
+        self.layoutIfNeeded()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

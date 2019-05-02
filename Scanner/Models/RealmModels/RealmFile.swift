@@ -19,6 +19,7 @@ class RealmFile: Object {
     
     @objc dynamic var cacheImageName: String = ""
     @objc dynamic var cacheImagePath: String = ""
+    @objc dynamic var location: RealmLocation?
     var pages = List<RealmPage>()
     var tags = List<RealmTag>()
     

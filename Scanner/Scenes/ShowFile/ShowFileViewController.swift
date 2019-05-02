@@ -80,6 +80,9 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         self.refresher = UIRefreshControl()
         self.scrollView.refreshControl = self.refresher!
         self.refresher?.addTarget(self, action: #selector(showFormTemplates), for: .allEvents)
+        
+        self.notesTextView.text = "Add Notes..."
+        self.notesTextView.textColor = UIColor.lightGray
 //        let refreshImage = UIImageView()
 //        refreshImage.image = UIImage(named: "search")
 //        refreshImage.frame = self.refresher!.bounds.offsetBy(dx: self.view.frame.size.width / 2 - 16, dy: 10)
@@ -294,6 +297,20 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         self.setFileInfo(new: false)
         
     }
+    func addLocationPin(center: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.025, longitudeDelta: 0.025))
+        self.mapView.setRegion(region, animated: true)
+        
+        
+        let pointAnnotation = MKPointAnnotation()
+//        pointAnnotation.pinCustomImageName = "Pokemon Pin"
+        pointAnnotation.coordinate = center
+        pointAnnotation.title = ""
+        
+        
+//        pinAnnotationView = MKPinAnnotationView(annotation: pointAnnotation, reuseIdentifier: "pin")
+        self.mapView.addAnnotation(pointAnnotation)
+    }
     func setFileInfo(new: Bool) {
         
         guard let vm = self.viewModel else {
@@ -301,12 +318,22 @@ class ShowFileViewController: UIViewController, ShowFileDisplayLogic
         }
         self.pageCollectionView.reloadData()
         if new {
+            self.addLocationPin(center: vm.location!)
             self.nameField.placeholder = self.viewModel?.name
             self.dateLabel.text = vm.date
         } else {
+            self.addLocationPin(center: vm.location!)
             self.nameField.text = self.viewModel?.name
             self.dateLabel.text = vm.date
-            self.notesTextView.text = vm.notes
+            if vm.notes == "" {
+                self.notesTextView.text = "Add Notes..."
+                self.notesTextView.textColor = UIColor.lightGray
+            } else {
+                self.notesTextView.text = vm.notes
+                self.notesTextView.textColor = UIColor.black
+            }
+
+            
             self.folderButton.setTitle(vm.folder, for: .normal)
             if !vm.pageImages.isEmpty {
                 self.scannerResults = vm.pageImages
@@ -444,10 +471,25 @@ extension ShowFileViewController: UITextFieldDelegate {
         
         return false
     }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.viewModel?.name = textField.text!
+    }
 }
 extension ShowFileViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         self.viewModel?.notes = textView.text
+    }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Add Notes..."
+            textView.textColor = UIColor.lightGray
+        }
     }
 }
 extension ShowFileViewController: ImageScannerControllerDelegate {
@@ -539,9 +581,9 @@ extension ShowFileViewController: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let childStartPoint = scrollView.convert(nameFieldContainer.frame.origin, to: scrollView)
         let direction = targetContentOffset.pointee.y - scrollView.contentOffset.y
-        print(direction)
-        print(scrollView.contentOffset.y)
-        print(targetContentOffset.pointee.y)
+//        print(direction)
+//        print(scrollView.contentOffset.y)
+//        print(targetContentOffset.pointee.y)
         if scrollView.contentOffset.y < childStartPoint.y && velocity.y > 0 {
             scrollView.isScrollEnabled = false
             editingInfo = true

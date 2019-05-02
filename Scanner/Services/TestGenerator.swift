@@ -54,6 +54,10 @@ class TestGenerator {
                     tag.parentTag = parentTag
                     tag.write(dataStore: TagManager.sharedInstance)
                 }
+            } else {
+                let tag = Tag(name: "Sub Tag i")
+                tag.parentTag = parentTag
+                tag.write(dataStore: TagManager.sharedInstance)
             }
         }
     }

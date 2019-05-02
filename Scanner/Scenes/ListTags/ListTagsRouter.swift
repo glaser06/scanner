@@ -16,6 +16,7 @@ import UIKit
 {
     //func routeToSomewhere(segue: UIStoryboardSegue?)
     func dismiss()
+    func routeToAddTag()
 }
 
 protocol ListTagsDataPassing
@@ -49,6 +50,27 @@ class ListTagsRouter: NSObject, ListTagsRoutingLogic, ListTagsDataPassing
     }
     func navigateBack(source: ListTagsViewController ) {
         source.dismiss(animated: true, completion: nil)
+    }
+    
+    func routeToAddTag() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let destinationVC = storyboard.instantiateViewController(withIdentifier: "AddTag") as! AddTagViewController
+        
+        
+        
+//        var destinationDS = destinationVC.router!.dataStore!
+        
+        navigateToAddTag(source: viewController!, destination: destinationVC)
+    }
+    
+    func navigateToAddTag(source: ListTagsViewController, destination: AddTagViewController)
+    {
+        //        source.present
+        //        source.show(destination, sender: nil)
+        destination.modalPresentationStyle = .overCurrentContext
+        destination.modalTransitionStyle = .crossDissolve
+        //        self.viewController!.present(destination, animated: true, completion: nil)
+        source.present(destination, animated: true, completion: nil)
     }
     //func routeToSomewhere(segue: UIStoryboardSegue?)
     //{

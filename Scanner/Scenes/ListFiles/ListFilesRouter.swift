@@ -102,6 +102,7 @@ class ListFilesRouter: NSObject, ListFilesRoutingLogic, ListFilesDataPassing
     
     func passDataToShowTags(source: ListFilesDataStore, destination: inout ListTagsDataStore)
     {
+        destination.showingFolders = false
         destination.tags = TagManager.sharedInstance.fetchTags()
 //        if let indexPath = viewController?.allTableView.indexPathForSelectedRow {
 //            destination.file = viewController?.files[indexPath.row - 2]

@@ -37,6 +37,7 @@ class TagManager {
     }
     
     @objc func fetchAllTags() {
+        self.tagDict = [:]
         let realmTags = realm.objects(RealmTag.self)
         for realmTag in realmTags {
             self.buildTagTree(parentTag: realmTag)
@@ -63,6 +64,15 @@ class TagManager {
         }
         
         
+    }
+    func depthOf(tag: Tag) -> Int {
+        var tag: Tag? = self.tagDict[tag.identifier]!
+        var depth = -1
+        while tag != nil {
+            depth += 1
+            tag = tag!.parentTag
+        }
+        return depth
     }
     
     func realmTagFor(tag: Tag) -> RealmTag? {
@@ -159,7 +169,14 @@ extension TagManager: DataStore {
         
     }
     func delete<T>(object: T) {
-        
+        guard let tag = object as? Tag else {
+            return
+        }
+        try! realm.write {
+            let realmTag = realm.object(ofType: RealmTag.self, forPrimaryKey: tag.identifier)!
+            realm.delete(realmTag)
+        }
+        NotificationCenter.default.post(name: .tagDataChanged, object: nil)
     }
 }
 

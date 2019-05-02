@@ -45,8 +45,6 @@
 	<string>Please allow access to the camera for scanning</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Please allow access to location for automatic location entry during scanning</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Please allow access to location for automatic location entry during scanning</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please allow access to location for automatic location entry during scanning</string>
 	<key>NSMicrophoneUsageDescription</key>

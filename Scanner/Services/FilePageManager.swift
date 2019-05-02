@@ -185,6 +185,9 @@ extension FilePageManager: DataStore {
             realmFile.name = file.name
             realmFile.notes = file.notes
             realmFile.createdOn = file.date
+            let realmLocation = file.location!.realmLocation
+            realmFile.location = realmLocation
+            
             realmFile.cacheImageName = "\(realmFile.identifier)cacheImage"
             let firstPage = file.pages.first!
             realmFile.cacheImagePath = self.saveResizedImage(name: realmFile.cacheImageName, image: firstPage.image!)
@@ -199,6 +202,7 @@ extension FilePageManager: DataStore {
                 realmTags.append(realmTag!)
             }
             try! realm.write {
+                realm.add(realmLocation, update: true)
                 realm.add(realmFile)
                 realm.add(realmPages)
                 realm.add(realmTags, update: true)

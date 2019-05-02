@@ -91,15 +91,19 @@ class FileWorker {
     func addNewPagesTo(file: File, pageImages: [UIImage]) -> File {
         var pages: [Page] = []
         for (i,img) in pageImages.enumerated() {
-            let page = Page(file: file)
-            page.image = img
-            page.pageNumber = i
-            page.pageName = "\(file.identifier)page\(page.pageNumber)"
-            pages.append(page)
+            if i >= file.pages.count {
+                let page = Page(file: file)
+                page.image = img
+                page.pageNumber = i
+                page.pageName = "\(file.identifier)page\(page.pageNumber)"
+                pages.append(page)
+            }
         }
-        file.pages = pages
+        file.pages.append(contentsOf: pages)
         return file
     }
+    
+    
     
     
     func saveFile(file: File) {

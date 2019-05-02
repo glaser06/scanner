@@ -15,6 +15,7 @@ class Tag {
     
     var childTags: [Tag] = []
     var parentTag: Tag?
+    var depth: Int = -1
     
     init() {
         self.name = ""

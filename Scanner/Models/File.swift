@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 
 class File {
+//    func copy(with zone: NSZone? = nil) -> Any {
+//        let file = File()
+//        
+//    }
+    
     var identifier: String = ""
     var name: String
     var notes: String = ""
@@ -18,6 +23,7 @@ class File {
     var tags: [Tag]
     var folder: Tag?
     var cacheImage: UIImage?
+    var location: LocationRecord?
     
     init() {
         self.name = ""
@@ -37,6 +43,7 @@ extension File {
         self.identifier = realmFile.identifier
         self.date = realmFile.createdOn
         self.notes = realmFile.notes
+        self.location = realmFile.location?.location
 //        for realmPage in realmFile.pages {
 //            let page = Page(realmPage: realmPage, file: self)
 //            self.pages.append(page)

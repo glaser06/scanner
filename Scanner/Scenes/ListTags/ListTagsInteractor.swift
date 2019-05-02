@@ -16,6 +16,7 @@ protocol ListTagsBusinessLogic
 {
     func fetchTags()
     func selectTags(request: ListTags.SelectTags.Request)
+    func deleteTags(request: ListTags.SelectTags.Request)
 }
 
 protocol ListTagsDataStore
@@ -38,13 +39,22 @@ class ListTagsInteractor: ListTagsBusinessLogic, ListTagsDataStore
     // MARK: Do something
     
     func fetchTags() {
-        if self.tags != nil {
-            
+        if self.showingFolders {
+            self.tags = self.tagManager.fetchTopFolders()
         } else {
             self.tags = self.tagManager.fetchTags()
         }
+//        if self.tags != nil {
+//
+//        } else {
+//            self.tags = self.tagManager.fetchTags()
+//        }
         
         var tagWithSelected: [(Tag, Bool)] = []
+        self.tags = tags.sorted {$0.name.lowercased() < $1.name.lowercased()}
+        for tag in self.tags {
+            tag.depth = tagManager.depthOf(tag: tag)
+        }
         if let f = self.file {
             tagWithSelected = self.tags.map({ (tag) -> (Tag, Bool) in
                 if f.tags.contains(tag) {
@@ -97,5 +107,16 @@ class ListTagsInteractor: ListTagsBusinessLogic, ListTagsDataStore
         }
         
         self.presenter?.dismiss()
+    }
+    func deleteTags(request: ListTags.SelectTags.Request) {
+        var selectedTags: [Tag] = []
+        for (i,tagModel) in request.selectedTags.enumerated() {
+            if tagModel.selected {
+                selectedTags.append(self.tags[i])
+            }
+        }
+        for tag in selectedTags {
+            tag.delete(dataStore: tagManager)
+        }
     }
 }

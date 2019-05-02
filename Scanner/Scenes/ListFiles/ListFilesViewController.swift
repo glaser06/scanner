@@ -84,6 +84,8 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
         self.fetchTags()
         self.fetchFiles()
         
+        self.setupExpandingMenu()
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(fetchTags), name: .tagDataChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(fetchFiles), name: .fileDataChanged, object: nil)
@@ -117,15 +119,97 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
     
     var folderHeight: CGFloat = 180
     
+    var longPressMenuGesture: UILongPressGestureRecognizer?
+    var cancelTapGesture: UITapGestureRecognizer?
+    var isMenuExpanded: Bool = false
     
     // MARK: Outlets
     
     @IBOutlet weak var allTableView: UITableView!
     
+    //add button sizing
+    @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var menuButtonHeight: NSLayoutConstraint!
+    @IBOutlet weak var menuButtonVerticalPosition: NSLayoutConstraint!
+    @IBOutlet weak var menuViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var menuViewVerticalPosition: NSLayoutConstraint!
+    @IBOutlet weak var menuView: UIView!
+    
+    
+    
     @IBAction func addFile () {
-        UIView.setAnimationsEnabled(false)
-        self.performSegue(withIdentifier: "ShowFile", sender: nil)
-        UIView.setAnimationsEnabled(true)
+        if self.isMenuExpanded {
+            self.hideMenu(sender: nil)
+        } else {
+            UIView.setAnimationsEnabled(false)
+            self.performSegue(withIdentifier: "ShowFile", sender: nil)
+            UIView.setAnimationsEnabled(true)
+        }
+        
+    }
+    func setupExpandingMenu() {
+//        let pressGesture = UILongPressGestureRecognizer(target: self, action: #selector(showMenu))
+//        pressGesture.minimumPressDuration = 0.4
+//        self.menuButton.addGestureRecognizer(pressGesture)
+//        self.longPressMenuGesture = pressGesture
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addFile))
+        self.menuButton.addGestureRecognizer(tapGesture)
+//        self.cancelTapGesture = UITapGestureRecognizer(target: self, action: #selector(hideMenu))
+//        cancelTapGesture!.cancelsTouchesInView = false
+//        self.allTableView.addGestureRecognizer(cancelTapGesture!)
+        
+    }
+    @IBAction func showMenu() {
+//        self.menuButtonVerticalPosition.constant = -8
+//        self.menuButtonHeight.constant = 40
+//        self.menuButton.cornerRadius = 20
+        self.menuButton.isHidden = true
+        self.menuViewHeight.constant = self.view.bounds.width - 64
+        self.menuViewVerticalPosition.constant = -64
+        self.menuView.cornerRadius = 7
+        self.isMenuExpanded = true
+        self.cancelTapGesture!.cancelsTouchesInView = true
+        UIView.animate(withDuration: 0.2, animations: {
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+        }) { (finished) in
+            
+//            self.longPressMenuGesture?.isEnabled = !(self.menuButtonHeight.constant == 40)
+//            self.isMenuExpanded = !self.isMenuExpanded
+        }
+        if self.isMenuExpanded {
+            
+            
+        } else {
+            
+            
+            
+        }
+        
+        
+    }
+    @objc func hideMenu(sender: UITapGestureRecognizer?) {
+        
+        if self.isMenuExpanded {
+//            self.menuButtonVerticalPosition.constant = -14
+//            self.menuButtonHeight.constant = 80
+//            self.menuButton.cornerRadius = 40
+            
+            self.menuViewHeight.constant = 80
+            self.menuViewVerticalPosition.constant = -14
+            self.menuView.cornerRadius = 40
+            self.isMenuExpanded = false
+            UIView.animate(withDuration: 0.2, animations: {
+                self.view.setNeedsLayout()
+                self.view.layoutIfNeeded()
+            }) { (finished) in
+                self.menuButton.isHidden = false
+                self.cancelTapGesture!.cancelsTouchesInView = false
+                //            self.longPressMenuGesture?.isEnabled = !(self.menuButtonHeight.constant == 40)
+                //            self.isMenuExpanded = !self.isMenuExpanded
+            }
+        }
+        
     }
     
     
@@ -164,18 +248,7 @@ class ListFilesViewController: UIViewController, ListFilesDisplayLogic
     
 }
 extension ListFilesViewController {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y <= 0 {
-//            var percentage = scrollView.contentOffset.y / 50 * -1
-//            
-//            if percentage > 1 {
-//                percentage = 1.0
-//                print(percentage)
-//            }
-//            self.refresherImage.transform = CGAffineTransform(scaleX: 1 + percentage, y: 1 + percentage)
-//        }
 //
-//    }
 }
 
 extension ListFilesViewController: UITableViewDataSource {
@@ -190,10 +263,12 @@ extension ListFilesViewController: UITableViewDataSource {
         case 0:
             let cell = tableView.dequeueReusableCell(withIdentifier: TagCollectionTableViewCell.identifier) as! TagCollectionTableViewCell
             cell.setCell(collectionHandler: self.tagSources!, routeToShowTags: self.showTags)
+            cell.selectionStyle = .none
             return cell
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: FolderCollectionTableViewCell.identifier) as! FolderCollectionTableViewCell
             cell.setCell(collectionHandler: self.folderSources!, expandCell: self.expandFolders)
+            cell.selectionStyle = .none
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: FileTableViewCell.identifier) as! FileTableViewCell
@@ -205,6 +280,11 @@ extension ListFilesViewController: UITableViewDataSource {
     }
 }
 extension ListFilesViewController: UITableViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.hideMenu(sender: nil)
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.router?.routeToShowFile(segue: nil)
         tableView.deselectRow(at: indexPath, animated: false)

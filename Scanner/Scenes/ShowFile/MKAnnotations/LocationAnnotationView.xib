@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LocationAnnotationView" customModule="Scanner" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="iN0-l3-epB" id="s8k-5Z-tF6"/>
+                <outlet property="contentView" destination="u1C-Ot-peT" id="Jfm-gA-WEI"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="256" height="79"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u1C-Ot-peT">
+                    <rect key="frame" x="0.0" y="0.0" width="256" height="79"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2933 Carmelo Dr." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S2h-hS-3if">
+                            <rect key="frame" x="16" y="8" width="224" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="tIi-w8-jcl"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Henderson NV 89053" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YFm-MF-lUp">
+                            <rect key="frame" x="16" y="40" width="224" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="22" id="cMN-wp-3hL"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="13"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="S2h-hS-3if" firstAttribute="leading" secondItem="u1C-Ot-peT" secondAttribute="leading" constant="16" id="BPe-cq-7cX"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YFm-MF-lUp" secondAttribute="bottom" constant="12" id="DVX-rT-zTB"/>
+                        <constraint firstAttribute="trailing" secondItem="S2h-hS-3if" secondAttribute="trailing" constant="16" id="RtE-1V-9bt"/>
+                        <constraint firstItem="YFm-MF-lUp" firstAttribute="leading" secondItem="S2h-hS-3if" secondAttribute="leading" id="X8I-i5-Cxb"/>
+                        <constraint firstAttribute="width" constant="256" id="f4V-Ii-SqR"/>
+                        <constraint firstItem="YFm-MF-lUp" firstAttribute="top" secondItem="S2h-hS-3if" secondAttribute="bottom" id="hyI-S5-DSY"/>
+                        <constraint firstItem="S2h-hS-3if" firstAttribute="top" secondItem="u1C-Ot-peT" secondAttribute="top" constant="8" id="mWn-as-MVd"/>
+                        <constraint firstItem="YFm-MF-lUp" firstAttribute="trailing" secondItem="S2h-hS-3if" secondAttribute="trailing" id="pVG-lD-T9M"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="7"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="u1C-Ot-peT" secondAttribute="trailing" id="WA3-jv-cuN"/>
+                <constraint firstItem="u1C-Ot-peT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bH4-Iq-43r"/>
+                <constraint firstItem="u1C-Ot-peT" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="met-vn-Cal"/>
+                <constraint firstItem="u1C-Ot-peT" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="x3U-nG-Mje"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="7"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="-33.600000000000001" y="-111.99400299850076"/>
+        </view>
+    </objects>
+</document>

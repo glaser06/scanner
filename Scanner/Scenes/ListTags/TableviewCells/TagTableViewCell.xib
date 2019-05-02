@@ -59,6 +59,7 @@
             <connections>
                 <outlet property="checkmark" destination="ghL-uj-VOp" id="qRl-oF-2b1"/>
                 <outlet property="colorView" destination="MfX-Ae-fja" id="BCV-VS-kxt"/>
+                <outlet property="depthDistanceContraint" destination="vEv-3O-qOb" id="2y4-4J-9ql"/>
                 <outlet property="nameLabel" destination="sMA-v0-daT" id="OHU-pU-8NT"/>
             </connections>
             <point key="canvasLocation" x="405.60000000000002" y="16.641679160419791"/>

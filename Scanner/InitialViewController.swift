@@ -18,6 +18,7 @@ class InitialViewController: UIViewController {
 //        TestGenerator.addTags()
 //        TestGenerator.addChildTags()
         TagManager.sharedInstance.fetchAllFolders()
+        LocationManager.sharedInstance
         
     }
     func startOver() {

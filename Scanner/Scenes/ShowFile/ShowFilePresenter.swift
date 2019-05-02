@@ -28,7 +28,7 @@ class ShowFilePresenter: ShowFilePresentationLogic
     
     func presentNewFile(response: ShowFile.FetchFile.Response) {
         let file = response.file
-        self.viewController?.displayNewFile(vm: ShowFile.FetchFile.ViewModel.init(file: ShowFile.FileModel.init(name: file.name, date: DatePresenter.fullDateString(date: file.date), pageImages: [], location: nil, fullAddress: "", tags: [], notes: "", folder: "")))
+        self.viewController?.displayNewFile(vm: ShowFile.FetchFile.ViewModel.init(file: ShowFile.FileModel.init(name: file.name, date: DatePresenter.fullDateString(date: file.date), pageImages: [], location: file.location?.coordinate, fullAddress: "", tags: [], notes: "", folder: "")))
     }
     func presentFile(response: ShowFile.FetchFile.Response) {
         let file = response.file
@@ -47,7 +47,7 @@ class ShowFilePresenter: ShowFilePresentationLogic
         } else {
             folderName = folder!.name
         }
-        self.viewController?.displayFile(vm: ShowFile.FetchFile.ViewModel.init(file: ShowFile.FileModel.init(name: file.name, date: DatePresenter.fullDateString(date: file.date), pageImages: pageImgs, location: nil, fullAddress: "", tags: tagModels, notes: file.notes, folder: folderName)))
+        self.viewController?.displayFile(vm: ShowFile.FetchFile.ViewModel.init(file: ShowFile.FileModel.init(name: file.name, date: DatePresenter.fullDateString(date: file.date), pageImages: pageImgs, location: file.location?.coordinate, fullAddress: "", tags: tagModels, notes: file.notes, folder: folderName)))
     }
     func dismiss() {
         viewController?.dismiss(animated: true, completion: nil)

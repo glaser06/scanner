@@ -19,11 +19,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="103" height="123"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yle-87-ivu">
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yle-87-ivu">
                         <rect key="frame" x="0.0" y="0.0" width="103" height="103"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FlX-Ll-K6T">
-                                <rect key="frame" x="12" y="12" width="33.5" height="33.5"/>
+                                <rect key="frame" x="8" y="8" width="39.5" height="39.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="FlX-Ll-K6T" secondAttribute="height" multiplier="1:1" id="qqm-6v-CJp"/>
                                 </constraints>
@@ -43,7 +43,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tc5-Y0-tes">
-                                <rect key="frame" x="57.5" y="12" width="33.5" height="33.5"/>
+                                <rect key="frame" x="55.5" y="8" width="39.5" height="39.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="tc5-Y0-tes" secondAttribute="height" multiplier="1:1" id="6Ka-Nm-xaE"/>
                                 </constraints>
@@ -63,7 +63,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CLw-dQ-PxJ">
-                                <rect key="frame" x="57.5" y="57.5" width="33.5" height="33.5"/>
+                                <rect key="frame" x="55.5" y="55.5" width="39.5" height="39.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="CLw-dQ-PxJ" secondAttribute="height" multiplier="1:1" id="gHR-hf-bfO"/>
                                 </constraints>
@@ -83,7 +83,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1uL-Mr-pt3">
-                                <rect key="frame" x="12" y="57.5" width="33.5" height="33.5"/>
+                                <rect key="frame" x="8" y="55.5" width="39.5" height="39.5"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
                                         <real key="value" value="0.5"/>
@@ -99,22 +99,44 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yjb-yv-XUH">
+                                <rect key="frame" x="0.0" y="37" width="103" height="66"/>
+                                <color key="backgroundColor" red="0.15410047769546509" green="0.41306763887405396" blue="0.69063264131546021" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="shadowOpacity">
+                                        <real key="value" value="0.10000000000000001"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
+                                        <size key="value" width="1" height="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="yjb-yv-XUH" secondAttribute="bottom" id="15l-xb-jjW"/>
                             <constraint firstItem="tc5-Y0-tes" firstAttribute="top" secondItem="FlX-Ll-K6T" secondAttribute="top" id="4pt-dE-Qdc"/>
                             <constraint firstItem="1uL-Mr-pt3" firstAttribute="leading" secondItem="FlX-Ll-K6T" secondAttribute="leading" id="5ac-5I-Wv4"/>
                             <constraint firstItem="1uL-Mr-pt3" firstAttribute="width" secondItem="1uL-Mr-pt3" secondAttribute="height" multiplier="1:1" id="77N-EU-53d"/>
+                            <constraint firstItem="yjb-yv-XUH" firstAttribute="leading" secondItem="yle-87-ivu" secondAttribute="leading" id="9Zr-oW-3Y9"/>
                             <constraint firstItem="1uL-Mr-pt3" firstAttribute="height" secondItem="FlX-Ll-K6T" secondAttribute="height" id="EL1-x1-3Dm"/>
-                            <constraint firstItem="CLw-dQ-PxJ" firstAttribute="top" secondItem="tc5-Y0-tes" secondAttribute="bottom" constant="12" id="IJO-sL-Q1X"/>
-                            <constraint firstItem="1uL-Mr-pt3" firstAttribute="top" secondItem="FlX-Ll-K6T" secondAttribute="bottom" constant="12" id="Suq-dm-4hR"/>
-                            <constraint firstItem="FlX-Ll-K6T" firstAttribute="leading" secondItem="yle-87-ivu" secondAttribute="leading" constant="12" id="YUQ-DP-yYz"/>
-                            <constraint firstItem="tc5-Y0-tes" firstAttribute="leading" secondItem="FlX-Ll-K6T" secondAttribute="trailing" constant="12" id="Ymg-Mc-vIM"/>
-                            <constraint firstItem="FlX-Ll-K6T" firstAttribute="top" secondItem="yle-87-ivu" secondAttribute="top" constant="12" id="aep-9g-Wdv"/>
+                            <constraint firstItem="CLw-dQ-PxJ" firstAttribute="top" secondItem="tc5-Y0-tes" secondAttribute="bottom" constant="8" id="IJO-sL-Q1X"/>
+                            <constraint firstItem="1uL-Mr-pt3" firstAttribute="top" secondItem="FlX-Ll-K6T" secondAttribute="bottom" constant="8" id="Suq-dm-4hR"/>
+                            <constraint firstItem="FlX-Ll-K6T" firstAttribute="leading" secondItem="yle-87-ivu" secondAttribute="leading" constant="8" id="YUQ-DP-yYz"/>
+                            <constraint firstItem="tc5-Y0-tes" firstAttribute="leading" secondItem="FlX-Ll-K6T" secondAttribute="trailing" constant="8" id="Ymg-Mc-vIM"/>
+                            <constraint firstAttribute="trailing" secondItem="yjb-yv-XUH" secondAttribute="trailing" id="aSR-9D-iLm"/>
+                            <constraint firstItem="FlX-Ll-K6T" firstAttribute="top" secondItem="yle-87-ivu" secondAttribute="top" constant="8" id="aep-9g-Wdv"/>
+                            <constraint firstItem="yjb-yv-XUH" firstAttribute="top" secondItem="yle-87-ivu" secondAttribute="top" constant="37" id="h5u-nV-Kpx"/>
                             <constraint firstItem="1uL-Mr-pt3" firstAttribute="bottom" secondItem="CLw-dQ-PxJ" secondAttribute="bottom" id="o89-PX-Vek"/>
                             <constraint firstItem="CLw-dQ-PxJ" firstAttribute="trailing" secondItem="tc5-Y0-tes" secondAttribute="trailing" id="oiH-g9-oYT"/>
-                            <constraint firstItem="FlX-Ll-K6T" firstAttribute="width" secondItem="yle-87-ivu" secondAttribute="width" multiplier="0.5" constant="-18" id="wRq-qA-6Wh"/>
-                            <constraint firstItem="CLw-dQ-PxJ" firstAttribute="leading" secondItem="1uL-Mr-pt3" secondAttribute="trailing" constant="12" id="xLv-dn-TId"/>
+                            <constraint firstItem="FlX-Ll-K6T" firstAttribute="width" secondItem="yle-87-ivu" secondAttribute="width" multiplier="0.5" constant="-12" id="wRq-qA-6Wh"/>
+                            <constraint firstItem="CLw-dQ-PxJ" firstAttribute="leading" secondItem="1uL-Mr-pt3" secondAttribute="trailing" constant="8" id="xLv-dn-TId"/>
                             <constraint firstAttribute="width" secondItem="yle-87-ivu" secondAttribute="height" multiplier="1:1" id="z1i-tv-bP1"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

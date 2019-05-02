@@ -14,6 +14,8 @@ class RealmNameTemplate: Object {
     @objc dynamic var identifier: String = UUID().uuidString
     @objc dynamic var name: String = ""
     @objc dynamic var defaultFormula: String = ""
+    var tags = List<RealmTag>()
+    
     
     override static func primaryKey() -> String {
         return "identifier"

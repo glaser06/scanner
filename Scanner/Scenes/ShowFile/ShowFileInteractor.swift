@@ -32,6 +32,8 @@ class ShowFileInteractor: ShowFileBusinessLogic, ShowFileDataStore
     var fpManager = FilePageManager.sharedInstance
     var file: File?
     var isNewFile: Bool = false
+    var oldFile: File?
+    var locationManager: LocationManager = LocationManager.sharedInstance
     
     
     // MARK: Do something
@@ -50,6 +52,7 @@ class ShowFileInteractor: ShowFileBusinessLogic, ShowFileDataStore
         } else {
             self.isNewFile = true
             self.file = FileWorker.newFile()
+            self.file?.location = LocationRecord(coordinate: self.locationManager.currentLocation!.coordinate)
             self.presenter?.presentNewFile(response: ShowFile.FetchFile.Response.init(file: file!))
         }
     }
@@ -60,55 +63,31 @@ class ShowFileInteractor: ShowFileBusinessLogic, ShowFileDataStore
         
         
         let fileWorker = FileWorker()
-        if self.isNewFile {
-            self.file = fileWorker.addNewPagesTo(file: self.file!, pageImages: images )
-            print(self.file?.tags)
-            
-        } else {
-            var newPages: [Page] = []
-            for (i, pageImage) in images.enumerated() {
-                if i >= self.file!.pages.count {
-                    let page = Page(file: self.file!)
-                    page.image = pageImage
-                    page.pageNumber = i
-                    page.pageName = "\(self.file!.identifier)page\(page.pageNumber)"
-                    newPages.append(page)
-                }
-            }
-            self.file?.pages.append(contentsOf: newPages)
-            
-        }
+        self.file = fileWorker.addNewPagesTo(file: self.file!, pageImages: images)
+//        self.file?.write(dataStore: fpManager)
         
         
     }
+//    func revertState() {
+//        self.file = oldFile
+//    }
     func saveFile(request: ShowFile.SaveFile.Request) {
-        let images = request.file.pageImages
-        self.file!.name = request.file.name
-        self.file!.notes = request.file.notes
-        
-        
-        let fileWorker = FileWorker()
-        if self.isNewFile {
-            self.file = fileWorker.addNewPagesTo(file: self.file!, pageImages: images )
-            print(self.file?.tags)
-            self.file?.write(dataStore: fpManager)
-        } else {
-            var newPages: [Page] = []
-            for (i, pageImage) in images.enumerated() {
-                if i >= self.file!.pages.count {
-                    let page = Page(file: self.file!)
-                    page.image = pageImage
-                    page.pageNumber = i
-                    page.pageName = "\(self.file!.identifier)page\(page.pageNumber)"
-                    newPages.append(page)
-                }
+        locationManager.currentPlace(completion: { (place) in
+            let loc = LocationRecord(coordinate: request.file.location!, place: place)
+            self.file?.location = loc
+            self.saveState(request: request)
+            
+            DispatchQueue.main.async {
+                self.file?.write(dataStore: self.fpManager)
+                self.file = nil
+                self.presenter?.dismiss()
             }
-            self.file?.pages.append(contentsOf: newPages)
-            self.file?.write(dataStore: fpManager)
+            
+        }) { (err) in
+            print("could not find location while saving")
+            self.presenter?.dismiss()
         }
         
-        self.file = nil
-        self.presenter?.dismiss()
         
     }
     
